@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>TripSplit — Group Expense & Pool Tracker</title>
-  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=XH7oPkrXhMQTqaOmTf1nQUrPmBbQ7BUlSCDoTk4gWSZ1UEOVV5fWqrWfJhFE5QGCsgaKmg_SAgj1IKxNQKixAy-ox1U5IwaDU_IuRxFoX4LZ3lYZ2WLSHYq4xaVcACNnAQmZXLBud8uN-RGsdgmjF5MNiQ3BIb5hW5zD_11rilsvyrM7dXzGixmO9eIi9HC3avv70WxXNIKUr_DDWKBU8R214U3SLxjNo3Ja9CaMFNIi5qDw_HvPzJs4HK869mu4vtixyCeyF0kARu1Dt23B_rgGUtfMQyc6Hefsm6NJuuXFZQsB8cVlAp7Rv6BHClx8" charset="UTF-8"></script><style>
+  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=hiUcUlYEAOxuoHjJFEV5sIsXjasTcEV5M5MG8SvRbph3gN15FJmImtx5uYSyfkopGBrEW76ixsst6thGh1VsSQVa0-g9IYQaragJovkOwVywVvYayOGSWzbrs6hDwXwRiumSKEZL8tTAjULZMewF9tH6bSt7DFR7UGncF6xzoQKbvbYaFmNgAN8tRC6s5hmH0k2wFPSWHI16fWaT47Bypr8o9QY3FT4IbndFG93li6Y9yNwUJN42sIE0Eu7-NeifflW75Is6qAnZLPzWoqcJGz04HuwXgGRdLbAS9zfkUpblfvXPRBjZicVVs0_dp9Lx" charset="UTF-8"></script><style>
     :root {
       --bg: #0f172a;
       --card: #1e293b;
@@ -410,7 +410,15 @@
     <div class="header-top">
       <div class="brand">
         <span class="brand-badge">TRIP</span>
-        <span>TripSplit Live</span>
+        <div id="tripNameView" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;" onclick="startEditTripName()" title="Tap to edit trip name">
+          <span id="tripNameText">My Trip</span>
+          <span style="font-size:11px;color:var(--muted);">✏️</span>
+        </div>
+        <div id="tripNameEdit" style="display:none;align-items:center;gap:4px;">
+          <input type="text" id="tripNameInput" placeholder="Trip Name" style="padding:4px 8px;font-size:13px;width:135px;height:28px;" onkeydown="if(event.key==='Enter')saveTripName();else if(event.key==='Escape')cancelEditTripName();" />
+          <button type="button" class="icon-btn" style="background:var(--emerald);color:#042f2e;border-color:var(--emerald);font-weight:700;padding:4px 8px;" onclick="saveTripName()">✓</button>
+          <button type="button" class="icon-btn" style="padding:4px 7px;" onclick="cancelEditTripName()">✕</button>
+        </div>
       </div>
       <div class="header-actions">
         <button type="button" class="pill-btn" onclick="openSyncModal()">
@@ -491,20 +499,25 @@
     <!-- TAB 2: MEMBERS & FAMILY SHARES -->
     <section id="tab-2" class="tab-pane">
       <div class="card">
-        <div class="card-title">Add Member / Family Unit</div>
+        <div class="card-title">Add Member</div>
         <div class="form-grid-2">
           <div>
-            <label class="field-label">Member / Family Name</label>
-            <input type="text" id="memName" placeholder="e.g. Rajarshi Family" />
+            <label class="field-label">Member name</label>
+            <input type="text" id="memName" placeholder="e.g. Rajarshi" />
           </div>
           <div>
-            <label class="field-label">Family Shares (1, 2, 3, 4...)</label>
+            <label class="field-label">Member share</label>
             <select id="memShares">
-              <option value="1">1 Share (Solo)</option>
-              <option value="2">2 Shares (Couple)</option>
-              <option value="3" selected>3 Shares (Family of 3)</option>
-              <option value="4">4 Shares (Family of 4)</option>
-              <option value="5">5 Shares (Family of 5)</option>
+              <option value="1" selected>1x</option>
+              <option value="2">2x</option>
+              <option value="3">3x</option>
+              <option value="4">4x</option>
+              <option value="5">5x</option>
+              <option value="6">6x</option>
+              <option value="7">7x</option>
+              <option value="8">8x</option>
+              <option value="9">9x</option>
+              <option value="10">10x</option>
             </select>
           </div>
         </div>
@@ -747,6 +760,7 @@
   };
 
   let state = {
+    tripName: "My Trip",
     members: [
       { id: "mem_1", name: "Rajarshi Family", shares: 3 },
       { id: "mem_2", name: "Amit Family", shares: 2 },
@@ -801,9 +815,35 @@
         const parsed = JSON.parse(raw);
         if (parsed.members && parsed.expenses && parsed.deposits) {
           state = parsed;
+          if (!state.tripName) state.tripName = "My Trip";
         }
       } catch (e) {}
     }
+  }
+
+  function startEditTripName() {
+    document.getElementById("tripNameView").style.display = "none";
+    const editWrap = document.getElementById("tripNameEdit");
+    editWrap.style.display = "inline-flex";
+    const inp = document.getElementById("tripNameInput");
+    inp.value = state.tripName || "My Trip";
+    inp.focus();
+    inp.select();
+  }
+
+  function cancelEditTripName() {
+    document.getElementById("tripNameEdit").style.display = "none";
+    document.getElementById("tripNameView").style.display = "inline-flex";
+  }
+
+  function saveTripName() {
+    const val = document.getElementById("tripNameInput").value.trim() || "My Trip";
+    state.tripName = val;
+    cancelEditTripName();
+    saveLocalState();
+    renderAll();
+    showToast("Trip name saved!");
+    syncActionToCloud({ action: "setTripName", tripName: val });
   }
 
   function switchTab(tabNum) {
@@ -1182,6 +1222,10 @@
 
   // Render UI
   function renderAll() {
+    const tName = state.tripName || "My Trip";
+    const tripNameEl = document.getElementById("tripNameText");
+    if (tripNameEl) tripNameEl.textContent = tName;
+
     const pool = getPoolMetrics();
     const totalSpent = state.expenses.reduce((s, e) => s + Number(e.amount || 0), 0);
     const totalShares = state.members.reduce((s, m) => s + Number(m.shares || 0), 0);
@@ -1430,6 +1474,7 @@
       const res = await fetch(url + "?t=" + Date.now());
       const data = await res.json();
       if (data.status === "success") {
+        if (typeof data.tripName === "string" && data.tripName.trim() !== "") state.tripName = data.tripName.trim();
         if (Array.isArray(data.members) && data.members.length > 0) state.members = data.members;
         if (Array.isArray(data.expenses)) state.expenses = data.expenses;
         if (Array.isArray(data.deposits)) state.deposits = data.deposits;
@@ -1476,6 +1521,7 @@
     closeSyncModal();
     await syncActionToCloud({
       action: "syncAll",
+      tripName: state.tripName || "My Trip",
       members: state.members,
       expenses: state.expenses,
       deposits: state.deposits
