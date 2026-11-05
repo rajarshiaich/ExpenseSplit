@@ -3,2631 +3,1538 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>TripSplit — Mobile Group &amp; Family Trip Expense Tracker</title>
-  <style>
+  <title>TripSplit — Group Expense & Pool Tracker</title>
+  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=XH7oPkrXhMQTqaOmTf1nQUrPmBbQ7BUlSCDoTk4gWSZ1UEOVV5fWqrWfJhFE5QGCsgaKmg_SAgj1IKxNQKixAy-ox1U5IwaDU_IuRxFoX4LZ3lYZ2WLSHYq4xaVcACNnAQmZXLBud8uN-RGsdgmjF5MNiQ3BIb5hW5zD_11rilsvyrM7dXzGixmO9eIi9HC3avv70WxXNIKUr_DDWKBU8R214U3SLxjNo3Ja9CaMFNIi5qDw_HvPzJs4HK869mu4vtixyCeyF0kARu1Dt23B_rgGUtfMQyc6Hefsm6NJuuXFZQsB8cVlAp7Rv6BHClx8" charset="UTF-8"></script><style>
     :root {
-      --bg-outer: #0f172a;
-      --bg-app: #f8fafc;
-      --bg-card: #ffffff;
-      --bg-muted: #f1f5f9;
-      --border: #e2e8f0;
-      --border-strong: #cbd5e1;
-      --text-main: #0f172a;
-      --text-sub: #475569;
-      --text-muted: #94a3b8;
-      --primary: #4f46e5;
-      --primary-hover: #4338ca;
-      --primary-soft: #eef2ff;
-      --primary-border: #c7d2fe;
-      --emerald: #059669;
-      --emerald-soft: #ecfdf5;
-      --emerald-border: #a7f3d0;
-      --rose: #e11d48;
-      --rose-soft: #fff1f2;
-      --rose-border: #fecdd3;
-      --amber: #d97706;
-      --amber-soft: #fffbeb;
-      --radius-lg: 16px;
-      --radius-md: 12px;
-      --radius-sm: 8px;
-      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
-      --shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.25);
+      --bg: #0f172a;
+      --card: #1e293b;
+      --card-alt: #334155;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --primary: #38bdf8;
+      --primary-dark: #0284c7;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --violet: #a855f7;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html, body {
-      width: 100%;
       height: 100%;
+      width: 100%;
+      background: #020617;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       overflow: hidden;
-      background-color: var(--bg-outer);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      color: var(--text-main);
-      -webkit-font-smoothing: antialiased;
     }
-
-    button, input, select, textarea {
-      font-family: inherit;
-      font-size: inherit;
-      color: inherit;
-    }
-
-    button {
-      cursor: pointer;
-      border: none;
-      background: none;
-    }
-
-    /* Outer Responsive Shell */
-    .app-wrapper {
-      width: 100%;
-      height: 100dvh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
     .app-shell {
-      width: 100%;
-      max-width: 440px;
+      max-width: 480px;
       height: 100dvh;
-      background: var(--bg-app);
+      margin: 0 auto;
+      background: var(--bg);
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      border-left: 1px solid #1e293b;
+      border-right: 1px solid #1e293b;
       position: relative;
     }
-
-    @media (min-width: 500px) {
-      .app-shell {
-        height: 94dvh;
-        max-height: 840px;
-        border-radius: 24px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-      }
-    }
-
     /* Top Header */
     .app-header {
-      background: #0f172a;
-      color: #ffffff;
-      padding: 10px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      border-bottom: 1px solid #1e293b;
-      flex-shrink: 0;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      min-width: 0;
-      flex: 1;
-    }
-
-    .brand-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      background: rgba(99, 102, 241, 0.2);
-      border: 1px solid rgba(129, 140, 248, 0.35);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #a5b4fc;
-      flex-shrink: 0;
-    }
-
-    .trip-title-row {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      min-width: 0;
-    }
-
-    .trip-title {
-      font-size: 13px;
-      font-weight: 700;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      cursor: pointer;
-    }
-
-    .trip-subtitle {
-      font-size: 10.5px;
-      color: #94a3b8;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 2px;
-      white-space: nowrap;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-shrink: 0;
-    }
-
-    .pool-pill-btn {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 10px;
-      padding: 4px 8px;
-      text-align: right;
-      transition: transform 0.1s;
-    }
-
-    .pool-pill-btn:active {
-      transform: scale(0.96);
-    }
-
-    .pool-pill-label {
-      display: block;
-      font-size: 8.5px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: #94a3b8;
-      font-weight: 700;
-    }
-
-    .pool-pill-val {
-      font-size: 11.5px;
-      font-weight: 800;
-      color: #34d399;
-    }
-
-    .icon-btn-dark {
-      width: 30px;
-      height: 30px;
-      border-radius: 9px;
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #cbd5e1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Main Viewport & Tab Panels */
-    .app-main {
-      flex: 1;
-      min-height: 0;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .tab-panel {
-      display: none;
-      flex-direction: column;
-      height: 100%;
-      width: 100%;
-      padding: 10px;
-      gap: 8px;
-      overflow: hidden;
-    }
-
-    .tab-panel.active {
-      display: flex;
-      animation: fadeSlide 0.14s ease-out;
-    }
-
-    @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(2px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Cards & Containers */
-    .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 10px 12px;
-      box-shadow: var(--shadow-sm);
-      flex-shrink: 0;
-    }
-
-    .list-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-sm);
-      flex: 1;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    .list-card-header {
-      padding: 7px 12px;
-      background: var(--bg-muted);
+      padding: 10px 12px 8px;
+      background: rgba(15, 23, 42, 0.95);
       border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 10.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text-sub);
       flex-shrink: 0;
     }
-
-    .scroll-area {
-      flex: 1;
-      min-height: 0;
-      overflow-y: auto;
-      padding: 4px 10px;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .scroll-area::-webkit-scrollbar {
-      width: 4px;
-      height: 4px;
-    }
-
-    .scroll-area::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 999px;
-    }
-
-    /* Form Controls */
-    .field-label-row {
+    .header-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 3px;
+      margin-bottom: 8px;
     }
-
-    .field-label {
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: var(--text-sub);
-    }
-
-    .input-box, .select-box {
-      width: 100%;
-      background: #f8fafc;
-      border: 1px solid var(--border-strong);
-      border-radius: 10px;
-      padding: 7px 10px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-main);
-      outline: none;
-      transition: border-color 0.15s, background 0.15s;
-    }
-
-    .input-box:focus, .select-box:focus {
-      border-color: var(--primary);
-      background: #ffffff;
-      box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
-    }
-
-    .row-grid-2 {
-      display: grid;
-      grid-template-columns: 7fr 5fr;
+    .brand {
+      display: flex;
+      align-items: center;
       gap: 8px;
-    }
-
-    .currency-wrap {
-      position: relative;
-    }
-
-    .currency-sym {
-      position: absolute;
-      left: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 13px;
       font-weight: 700;
-      color: var(--text-muted);
-      pointer-events: none;
+      font-size: 15px;
+      letter-spacing: -0.2px;
     }
-
-    .currency-wrap .input-box {
-      padding-left: 24px;
+    .brand-badge {
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      color: #0f172a;
       font-weight: 800;
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 6px;
     }
-
-    /* Category Pill Badge */
-    .cat-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 10px;
-      font-weight: 700;
-      border: 1px solid transparent;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    /* Split Member Chips */
-    .chips-wrap {
+    .header-actions {
       display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      max-height: 68px;
-      overflow-y: auto;
-      padding: 2px 0;
-    }
-
-    .split-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 4px 8px;
-      border-radius: 9px;
-      font-size: 11.5px;
-      font-weight: 600;
-      border: 1px solid var(--border-strong);
-      background: #f8fafc;
-      color: var(--text-sub);
-      transition: all 0.12s;
-    }
-
-    .split-chip.selected {
-      background: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
-    }
-
-    .chip-badge {
-      font-size: 9.5px;
-      padding: 1px 5px;
-      border-radius: 5px;
-      background: rgba(15, 23, 42, 0.08);
-      font-weight: 700;
-    }
-
-    .split-chip.selected .chip-badge {
-      background: rgba(255, 255, 255, 0.22);
-      color: #ffffff;
-    }
-
-    /* Primary Buttons */
-    .btn-primary {
-      width: 100%;
-      background: var(--primary);
-      color: #ffffff;
-      font-weight: 700;
-      font-size: 13px;
-      padding: 9px 12px;
-      border-radius: 11px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       gap: 6px;
-      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
-      transition: background 0.15s, transform 0.1s;
     }
-
-    .btn-primary:hover {
-      background: var(--primary-hover);
-    }
-
-    .btn-primary:active {
-      transform: scale(0.99);
-    }
-
-    .btn-emerald {
-      background: var(--emerald);
-      box-shadow: 0 2px 6px rgba(5, 150, 105, 0.25);
-    }
-
-    .btn-emerald:hover {
-      background: #047857;
-    }
-
-    /* List Rows */
-    .item-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      padding: 8px 2px;
-      border-bottom: 1px solid #f1f5f9;
-      font-size: 12px;
-    }
-
-    .item-row:last-child {
-      border-bottom: none;
-    }
-
-    .item-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      min-width: 0;
-      flex: 1;
+    .pill-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 9px;
+      border-radius: 999px;
       cursor: pointer;
-    }
-
-    .cat-icon-box {
-      width: 30px;
-      height: 30px;
-      border-radius: 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      flex-shrink: 0;
-      border: 1px solid transparent;
-    }
-
-    .item-title-row {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      min-width: 0;
-    }
-
-    .item-title {
-      font-weight: 700;
-      color: var(--text-main);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .item-date {
-      font-size: 10px;
-      color: var(--text-muted);
-      flex-shrink: 0;
-    }
-
-    .item-sub {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 10px;
-      color: var(--text-sub);
-      margin-top: 2px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .mini-tag {
-      padding: 1px 5px;
-      border-radius: 4px;
-      font-size: 9.5px;
-      font-weight: 700;
-      border: 1px solid transparent;
-    }
-
-    .tag-pool {
-      background: var(--emerald-soft);
-      color: var(--emerald);
-      border-color: var(--emerald-border);
-    }
-
-    .tag-member {
-      background: var(--primary-soft);
-      color: var(--primary);
-      border-color: var(--primary-border);
-    }
-
-    .item-right {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      flex-shrink: 0;
-    }
-
-    .item-amount {
-      font-weight: 800;
-      font-size: 12.5px;
-      color: var(--text-main);
-      margin-right: 2px;
-    }
-
-    .action-icon-btn {
-      width: 26px;
-      height: 26px;
-      border-radius: 7px;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      color: var(--text-sub);
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      transition: all 0.12s;
+      gap: 5px;
     }
-
-    .action-icon-btn.edit:hover {
-      background: var(--primary-soft);
-      color: var(--primary);
-      border-color: var(--primary-border);
+    .sync-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--amber);
+      display: inline-block;
     }
-
-    .action-icon-btn.del:hover {
-      background: var(--rose-soft);
-      color: var(--rose);
-      border-color: var(--rose-border);
-    }
-
-    /* Share Weight Selector & Stepper */
-    .share-presets {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .share-btn {
-      width: 28px;
-      height: 28px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      border: 1px solid var(--border-strong);
-      background: #ffffff;
-      color: var(--text-sub);
-    }
-
-    .share-btn.active {
-      background: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
-    }
-
-    /* Pool Hero Card */
-    .pool-hero {
-      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-      color: #ffffff;
-      border-radius: var(--radius-lg);
-      padding: 11px 12px;
-      flex-shrink: 0;
-    }
-
-    .pool-metrics-grid {
+    .sync-dot.online { background: var(--emerald); box-shadow: 0 0 6px var(--emerald); }
+    .sync-dot.error { background: var(--rose); }
+    /* Top KPI Strip */
+    .kpi-strip {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 6px;
-      margin-top: 8px;
+    }
+    .kpi-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 8px;
       text-align: center;
     }
-
-    .pool-metric-box {
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 10px;
-      padding: 6px 4px;
+    .kpi-label {
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
     }
-
-    .pool-metric-label {
-      font-size: 9.5px;
-      color: #cbd5e1;
-      display: block;
-    }
-
-    .pool-metric-val {
+    .kpi-val {
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 700;
       margin-top: 2px;
-      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-
-    /* Segmented Controls */
-    .segmented {
+    /* Main Viewport */
+    .tab-viewport {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 12px 16px;
+    }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+    /* Compact Cards & Forms */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 11px;
+      margin-bottom: 10px;
+    }
+    .card-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .form-grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      background: var(--bg-muted);
-      padding: 3px;
-      border-radius: 10px;
-      gap: 3px;
+      gap: 8px;
+      margin-bottom: 8px;
     }
-
-    .seg-btn {
-      padding: 6px 8px;
-      border-radius: 8px;
-      font-size: 11.5px;
-      font-weight: 700;
-      color: var(--text-sub);
-      text-align: center;
-      transition: all 0.12s;
-    }
-
-    .seg-btn.active {
-      background: #ffffff;
-      color: var(--primary);
-      box-shadow: var(--shadow-sm);
-    }
-
-    /* Category Graph Styles */
-    .stacked-bar {
-      width: 100%;
-      height: 14px;
-      background: var(--bg-muted);
-      border-radius: 999px;
-      overflow: hidden;
-      display: flex;
-      gap: 2px;
-      padding: 2px;
-      border: 1px solid var(--border);
-      margin: 6px 0;
-    }
-
-    .stacked-seg {
-      height: 100%;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: opacity 0.15s;
-    }
-
-    .cat-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
-      max-height: 135px;
-      overflow-y: auto;
-      padding-right: 2px;
-    }
-
-    .cat-card {
-      padding: 7px 8px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: #f8fafc;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      transition: all 0.12s;
-    }
-
-    .cat-card.active {
-      border-color: var(--primary);
-      background: var(--primary-soft);
-      box-shadow: 0 0 0 1px var(--primary);
-    }
-
-    .cat-progress-track {
-      width: 100%;
-      height: 4px;
-      background: #e2e8f0;
-      border-radius: 999px;
-      overflow: hidden;
-    }
-
-    /* Bottom Navigation Bar (6 Tabs) */
-    .bottom-nav {
-      background: #ffffff;
-      border-top: 1px solid var(--border);
-      padding: 4px 4px calc(4px + env(safe-area-inset-bottom, 0px));
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 2px;
-      flex-shrink: 0;
-      z-index: 20;
-    }
-
-    .nav-tab-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 6px 2px;
-      border-radius: 10px;
-      color: var(--text-sub);
+    .form-row { margin-bottom: 8px; }
+    label.field-label {
+      display: block;
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
       font-weight: 600;
-      transition: all 0.12s;
+    }
+    input, select {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+    }
+    input:focus, select:focus { border-color: var(--primary); }
+    .reason-wrap {
+      position: relative;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .cat-badge {
+      flex-shrink: 0;
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 7px 8px;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
       user-select: none;
     }
-
-    .nav-tab-btn svg {
-      width: 17px;
-      height: 17px;
-      margin-bottom: 2px;
-      pointer-events: none;
-    }
-
-    .nav-tab-btn span {
-      font-size: 9.5px;
-      line-height: 1;
-      letter-spacing: -0.01em;
-      pointer-events: none;
-    }
-
-    .nav-tab-btn.active {
-      color: var(--primary);
-      background: var(--primary-soft);
-      font-weight: 800;
-    }
-
-    /* Modal & Toast */
-    .modal-backdrop {
-      display: none;
-      position: absolute;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(2px);
-      z-index: 50;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-    }
-
-    .modal-backdrop.open {
+    /* Split Member Pills */
+    .split-header {
       display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
     }
-
-    .modal-card {
-      background: #ffffff;
-      border-radius: 18px;
+    .mini-actions { display: flex; gap: 6px; }
+    .mini-link {
+      font-size: 11px;
+      color: var(--primary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .chips-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .member-chip {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      user-select: none;
+    }
+    .member-chip.selected {
+      background: rgba(16, 185, 129, 0.16);
+      border-color: var(--emerald);
+      color: #ecfdf5;
+    }
+    .chip-weight {
+      background: rgba(255,255,255,0.12);
+      padding: 1px 5px;
+      border-radius: 999px;
+      font-size: 10px;
+    }
+    .btn-primary {
       width: 100%;
-      max-width: 360px;
-      max-height: 88dvh;
-      overflow-y: auto;
-      padding: 14px;
-      box-shadow: var(--shadow-lg);
+      background: linear-gradient(135deg, #38bdf8, #0284c7);
+      color: #0f172a;
+      font-weight: 700;
+      border: none;
+      padding: 10px;
+      border-radius: 9px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .btn-primary:active { transform: scale(0.99); }
+    /* Lists */
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      gap: 8px;
+    }
+    .list-item:last-child { border-bottom: none; }
+    .item-main { flex: 1; min-width: 0; }
+    .item-title {
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .item-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .item-right {
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .item-amt {
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .icon-btn {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 4px 7px;
+      border-radius: 6px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    /* Stepper for Shares */
+    .share-stepper {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #0f172a;
+      padding: 3px 6px;
+      border-radius: 8px;
       border: 1px solid var(--border);
     }
-
+    .step-btn {
+      background: var(--card-alt);
+      color: var(--text);
+      border: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    /* Stacked Bar Graph */
+    .stacked-bar {
+      height: 14px;
+      width: 100%;
+      background: #0f172a;
+      border-radius: 999px;
+      overflow: hidden;
+      display: flex;
+      margin-bottom: 10px;
+    }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .cat-card {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 9px;
+      cursor: pointer;
+    }
+    .cat-card.active-filter {
+      border-color: var(--primary);
+      background: rgba(56, 189, 248, 0.1);
+    }
+    /* Bottom 6-Tab Nav */
+    .bottom-nav {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      background: #090d16;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--muted);
+      padding: 8px 2px;
+      font-size: 10px;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+    }
+    .nav-btn.active {
+      color: var(--primary);
+      background: rgba(56, 189, 248, 0.08);
+    }
+    .nav-icon { font-size: 15px; line-height: 1; }
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 100;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 420px;
+      padding: 14px;
+      max-height: 90dvh;
+      overflow-y: auto;
+    }
     .toast {
-      position: absolute;
-      top: 54px;
+      position: fixed;
+      bottom: 68px;
       left: 50%;
-      transform: translate(-50%, -8px);
-      background: rgba(15, 23, 42, 0.95);
-      color: #ffffff;
+      transform: translateX(-50%);
+      background: #10b981;
+      color: #042f2e;
+      font-weight: 700;
+      font-size: 12px;
       padding: 7px 14px;
       border-radius: 999px;
-      font-size: 11.5px;
-      font-weight: 700;
-      box-shadow: var(--shadow-lg);
-      pointer-events: none;
-      opacity: 0;
-      transition: all 0.2s ease;
-      z-index: 60;
-      white-space: nowrap;
+      display: none;
+      z-index: 200;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
-
-    .toast.show {
-      opacity: 1;
-      transform: translate(-50%, 0);
-    }
-
-    /* Category Colors */
-    .cat-food { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
-    .bar-food { background: #f97316; }
-
-    .cat-transport { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
-    .bar-transport { background: #3b82f6; }
-
-    .cat-stay { background: #faf5ff; color: #7e22ce; border-color: #e9d5ff; }
-    .bar-stay { background: #a855f7; }
-
-    .cat-fun { background: #fdf2f8; color: #be185d; border-color: #fbcfe8; }
-    .bar-fun { background: #ec4899; }
-
-    .cat-shop { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
-    .bar-shop { background: #10b981; }
-
-    .cat-misc { background: #f1f5f9; color: #334155; border-color: #cbd5e1; }
-    .bar-misc { background: #64748b; }
   </style>
 </head>
 <body>
-  <div class="app-wrapper">
-    <div class="app-shell">
+<div class="app-shell">
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-top">
+      <div class="brand">
+        <span class="brand-badge">TRIP</span>
+        <span>TripSplit Live</span>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="pill-btn" onclick="openSyncModal()">
+          <span id="syncDot" class="sync-dot"></span>
+          <span id="syncLabel">Cloud Sync</span>
+        </button>
+        <button type="button" class="pill-btn" onclick="syncFromCloud(true)" title="Refresh from Google Sheet">↻</button>
+      </div>
+    </div>
+    <div class="kpi-strip">
+      <div class="kpi-box">
+        <div class="kpi-label">Total Spent</div>
+        <div class="kpi-val" id="kpiTotalSpent">₹0</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label">Pool Cash Left</div>
+        <div class="kpi-val" id="kpiPoolLeft" style="color:var(--emerald);">₹0</div>
+      </div>
+      <div class="kpi-box">
+        <div class="kpi-label">Total Shares</div>
+        <div class="kpi-val" id="kpiTotalShares">0x</div>
+      </div>
+    </div>
+  </header>
 
-      <!-- ================= TOP COMPACT HEADER ================= -->
-      <header class="app-header">
-        <div class="header-left">
-          <div class="brand-icon" onclick="window.openTripSettingsModal()" title="Trip Settings">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M3 17l6-6 4 4 8-8"/><path d="M17 7h4v4"/>
-            </svg>
+  <!-- Main Tab Viewport -->
+  <main class="tab-viewport">
+    <!-- TAB 1: ADD EXPENSE -->
+    <section id="tab-1" class="tab-pane active">
+      <div class="card">
+        <div class="card-title">
+          <span>Log New Expense</span>
+          <span id="livePerSharePreview" style="color:var(--primary);font-size:11px;">₹0 / share</span>
+        </div>
+        <div class="form-row">
+          <label class="field-label">Paid By (Member or Pooled Fund)</label>
+          <select id="expPayer"></select>
+        </div>
+        <div class="form-grid-2">
+          <div>
+            <label class="field-label">Amount (₹)</label>
+            <input type="number" id="expAmount" placeholder="e.g. 1500" inputmode="decimal" oninput="updateSharePreview()" />
           </div>
-          <div style="min-width:0;">
-            <div class="trip-title-row" onclick="window.openTripSettingsModal()">
-              <h1 id="tripTitleDisplay" class="trip-title">Goa Friends &amp; Family Trip</h1>
-              <span style="font-size:10px;color:#94a3b8;">✎</span>
-            </div>
-            <div class="trip-subtitle">
-              <span id="headerStatsMembers">4 Members (8 sh)</span>
-              <span>•</span>
-              <span id="headerStatsTotal" style="color:#a5b4fc;font-weight:700;">Spent: ₹0</span>
-            </div>
+          <div>
+            <label class="field-label">Date</label>
+            <input type="date" id="expDate" />
           </div>
         </div>
-
-        <div class="header-right">
-          <button type="button" class="pool-pill-btn" onclick="window.switchTab('tab-pool')" title="View Pooled Fund">
-            <span class="pool-pill-label">Pool Left</span>
-            <span id="headerPoolBalance" class="pool-pill-val">₹0</span>
-          </button>
-          <button type="button" class="icon-btn-dark" onclick="window.openBackupModal()" title="Backup / Restore / Reset Data">
-            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
-          </button>
+        <div class="form-row">
+          <label class="field-label">Reason (Auto-Assigns Category — Tap Badge to Change)</label>
+          <div class="reason-wrap">
+            <input type="text" id="expReason" placeholder="e.g. Highway dinner, Cab, Resort..." oninput="handleReasonInput()" />
+            <span id="expCatBadge" class="cat-badge" onclick="cycleCategory()">🍽️ Food & Drinks</span>
+          </div>
         </div>
-      </header>
-
-      <!-- ================= MAIN TAB CONTENT ================= -->
-      <main class="app-main">
-
-        <!-- ===================================================== -->
-        <!-- TAB 1: ADD EXPENSE                                    -->
-        <!-- ===================================================== -->
-        <section id="tab-expense" class="tab-panel active">
-          <form id="expenseForm" onsubmit="window.handleAddExpense(event)" class="card" style="display:flex;flex-direction:column;gap:8px;">
-            
-            <!-- 1. Paid By -->
-            <div>
-              <div class="field-label-row">
-                <label for="expPaidBy" class="field-label">1. Paid By (Member or Pooled Fund)</label>
-                <span id="paidByPoolHint" style="font-size:10px;font-weight:700;color:var(--emerald);">✓ Uses Pool Kitty</span>
-              </div>
-              <select id="expPaidBy" class="select-box" onchange="window.updatePaidByHint()" required></select>
-            </div>
-
-            <!-- 2. Amount & Date -->
-            <div class="row-grid-2">
-              <div>
-                <div class="field-label-row">
-                  <label for="expAmount" class="field-label">2. Amount Spent</label>
-                </div>
-                <div class="currency-wrap">
-                  <span id="currencyPrefixExp" class="currency-sym">₹</span>
-                  <input id="expAmount" type="number" step="0.01" min="0.01" required placeholder="0.00"
-                    oninput="window.updateSplitPreview()" class="input-box" />
-                </div>
-              </div>
-              <div>
-                <div class="field-label-row">
-                  <label for="expDate" class="field-label">Date</label>
-                </div>
-                <input id="expDate" type="date" required class="input-box" style="padding:7px 6px;font-size:12px;" />
-              </div>
-            </div>
-
-            <!-- 3. Reason + Live Auto Category -->
-            <div>
-              <div class="field-label-row">
-                <label for="expReason" class="field-label">3. Reason for Spending</label>
-                <button type="button" id="autoCategoryBadge" onclick="window.cycleManualCategory()" class="cat-pill cat-misc" title="Tap to override category">
-                  <span id="autoCategoryText">🏷️ Auto: Misc</span>
-                </button>
-              </div>
-              <input id="expReason" type="text" required placeholder="e.g., Dinner at shack, Uber cab, Resort room..."
-                oninput="window.handleReasonInput(this.value)" class="input-box" />
-            </div>
-
-            <!-- 4. Split Among Members -->
-            <div>
-              <div class="field-label-row">
-                <span class="field-label">
-                  4. Split With <span id="splitShareCounter" style="color:var(--primary);text-transform:none;">(8 shares)</span>
-                </span>
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <span id="perSharePreview" style="font-size:10px;font-weight:700;color:var(--text-muted);"></span>
-                  <button type="button" id="toggleAllSplitBtn" onclick="window.toggleAllSplitMembers()"
-                    style="font-size:10.5px;font-weight:700;color:var(--primary);">
-                    Clear All
-                  </button>
-                </div>
-              </div>
-              <div id="splitMembersContainer" class="chips-wrap"></div>
-            </div>
-
-            <button type="submit" class="btn-primary">
-              <span>＋ Save Expense</span>
-            </button>
-          </form>
-
-          <!-- Recent Expenses Mini-List -->
-          <div class="list-card">
-            <div class="list-card-header">
-              <span>Recent Expenses (<span id="expenseCountBadge">0</span>)</span>
-              <span style="font-size:9.5px;font-weight:600;text-transform:none;color:var(--primary);">Tap item to edit</span>
-            </div>
-            <div id="recentExpensesList" class="scroll-area"></div>
-          </div>
-        </section>
-
-        <!-- ===================================================== -->
-        <!-- TAB 2: MEMBERS & FAMILY SHARES                        -->
-        <!-- ===================================================== -->
-        <section id="tab-members" class="tab-panel">
-          <div class="card">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-              <div>
-                <div class="field-label">Add Member / Family Group</div>
-                <p style="font-size:10.5px;color:var(--text-muted);">Set share weight (1, 2, 3, 4...) by family size</p>
-              </div>
-              <span id="totalSharesBadge" style="background:var(--primary-soft);color:var(--primary);border:1px solid var(--primary-border);font-weight:800;font-size:11px;padding:3px 8px;border-radius:9px;">
-                8 Total Shares
-              </span>
-            </div>
-
-            <form id="addMemberForm" onsubmit="window.handleAddMember(event)" style="display:flex;flex-direction:column;gap:7px;">
-              <div style="display:flex;gap:6px;">
-                <input id="newMemberName" type="text" required maxlength="26" placeholder="Name (e.g., Vikram & Family)" class="input-box" style="flex:1;" />
-                <button type="submit" class="btn-primary" style="width:auto;padding:0 14px;flex-shrink:0;">
-                  + Add
-                </button>
-              </div>
-
-              <div style="display:flex;align-items:center;justify-content:space-between;background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:5px 8px;">
-                <span style="font-size:11px;font-weight:700;color:var(--text-sub);">Family Share Count:</span>
-                <div class="share-presets" id="newMemberShareSelector">
-                  <button type="button" onclick="window.selectNewMemberShare(1)" data-share="1" class="share-btn active">1</button>
-                  <button type="button" onclick="window.selectNewMemberShare(2)" data-share="2" class="share-btn">2</button>
-                  <button type="button" onclick="window.selectNewMemberShare(3)" data-share="3" class="share-btn">3</button>
-                  <button type="button" onclick="window.selectNewMemberShare(4)" data-share="4" class="share-btn">4</button>
-                  <button type="button" onclick="window.selectNewMemberShare(5)" data-share="5" class="share-btn">5</button>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <div class="list-card">
-            <div class="list-card-header">
-              <span>Members &amp; Share Weights</span>
-              <span style="font-size:9.5px;text-transform:none;color:var(--text-muted);">Use － / ＋ to change shares</span>
-            </div>
-            <div id="membersListContainer" class="scroll-area"></div>
-          </div>
-        </section>
-
-        <!-- ===================================================== -->
-        <!-- TAB 3: POOLED FUND (COMMON KITTY)                     -->
-        <!-- ===================================================== -->
-        <section id="tab-pool" class="tab-panel">
-          <div class="pool-hero">
-            <div style="display:flex;align-items:center;justify-content:space-between;">
-              <span style="font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:#a5b4fc;">
-                🏦 Pooled Fund (Common Kitty)
-              </span>
-              <span id="poolStatusPill" style="font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:999px;background:rgba(16,185,129,0.2);color:#6ee7b7;">
-                Cash Available
-              </span>
-            </div>
-            <div class="pool-metrics-grid">
-              <div class="pool-metric-box">
-                <span class="pool-metric-label">Total Added</span>
-                <span id="poolTotalIn" class="pool-metric-val">₹0</span>
-              </div>
-              <div class="pool-metric-box">
-                <span class="pool-metric-label">Pool Spent</span>
-                <span id="poolTotalOut" class="pool-metric-val" style="color:#fcd34d;">₹0</span>
-              </div>
-              <div class="pool-metric-box" style="background:rgba(255,255,255,0.13);">
-                <span class="pool-metric-label">Cash Left</span>
-                <span id="poolBalanceCard" class="pool-metric-val" style="color:#34d399;">₹0</span>
-              </div>
+        <div class="form-row">
+          <div class="split-header">
+            <label class="field-label" style="margin:0;">Split Between Members (Weighted by Shares)</label>
+            <div class="mini-actions">
+              <button type="button" class="mini-link" onclick="toggleAllSplit(true)">All</button>
+              <button type="button" class="mini-link" onclick="toggleAllSplit(false)">Clear</button>
             </div>
           </div>
-
-          <form id="poolForm" onsubmit="window.handleAddPoolContribution(event)" class="card" style="display:flex;flex-direction:column;gap:8px;">
-            <div class="field-label">Log Money Paid to Pooled Fund</div>
-            <div>
-              <select id="poolMemberId" class="select-box" required></select>
-            </div>
-            <div class="row-grid-2">
-              <div class="currency-wrap">
-                <span id="currencyPrefixPool" class="currency-sym">₹</span>
-                <input id="poolAmount" type="number" step="0.01" min="0.01" required placeholder="Amount" class="input-box" />
-              </div>
-              <input id="poolDate" type="date" required class="input-box" style="padding:7px 6px;font-size:12px;" />
-            </div>
-            <button type="submit" class="btn-primary btn-emerald">
-              <span>＋ Add Deposit to Pool</span>
-            </button>
-          </form>
-
-          <div class="list-card">
-            <div class="list-card-header">
-              <span>Pool Deposits (<span id="poolCountBadge">0</span>)</span>
-              <span style="font-size:9.5px;text-transform:none;color:var(--primary);">Tap to edit</span>
-            </div>
-            <div id="poolHistoryList" class="scroll-area"></div>
-          </div>
-        </section>
-
-        <!-- ===================================================== -->
-        <!-- TAB 4: WHO OWES WHOM (SETTLEMENTS)                    -->
-        <!-- ===================================================== -->
-        <section id="tab-settle" class="tab-panel">
-          <div class="card" style="display:flex;flex-direction:column;gap:7px;">
-            <div style="display:flex;align-items:center;gap:6px;">
-              <div class="segmented" style="flex:1;">
-                <button type="button" id="subTabBtnTransfers" onclick="window.switchSettleSubView('transfers')" class="seg-btn active">
-                  Who Owes Whom
-                </button>
-                <button type="button" id="subTabBtnBalances" onclick="window.switchSettleSubView('balances')" class="seg-btn">
-                  Member Net Table
-                </button>
-              </div>
-              <button type="button" onclick="window.copySettlementReport()"
-                style="background:var(--primary-soft);color:var(--primary);border:1px solid var(--primary-border);padding:7px 10px;border-radius:10px;font-size:11px;font-weight:800;flex-shrink:0;">
-                📋 Share
-              </button>
-            </div>
-
-            <div style="display:flex;align-items:center;justify-content:space-between;font-size:11px;background:#f8fafc;padding:6px 10px;border-radius:9px;border:1px solid var(--border);">
-              <span>Total Trip Spend: <b id="settleTotalSpend">₹0</b></span>
-              <span>Pool Cash Left: <b id="settlePoolRemaining" style="color:var(--emerald);">₹0</b></span>
-            </div>
-          </div>
-
-          <!-- Transfers View -->
-          <div id="settleViewTransfers" class="list-card">
-            <div class="list-card-header">
-              <span>Exact Payments to Settle All Debts</span>
-            </div>
-            <div id="settlementTransfersList" class="scroll-area" style="padding:8px 10px;"></div>
-          </div>
-
-          <!-- Member Net Breakdown View -->
-          <div id="settleViewBalances" class="list-card" style="display:none;">
-            <div class="list-card-header">
-              <span>Paid (Direct + Pool) vs. Weighted Trip Share</span>
-            </div>
-            <div id="memberBalancesList" class="scroll-area"></div>
-          </div>
-        </section>
-
-        <!-- ===================================================== -->
-        <!-- TAB 5: CATEGORY GRAPH + LOGGED EXPENSE EDITOR         -->
-        <!-- ===================================================== -->
-        <section id="tab-categories" class="tab-panel">
-          <div class="card">
-            <div style="display:flex;align-items:center;justify-content:space-between;">
-              <div>
-                <div class="field-label">📊 Expenses by Category Graph</div>
-                <p style="font-size:10px;color:var(--text-muted);">Tap any category below to filter &amp; edit its expenses</p>
-              </div>
-              <button type="button" id="clearCategoryFilterBtn" onclick="window.setCategoryFilter('ALL')"
-                style="display:none;font-size:10px;font-weight:800;color:var(--primary);background:var(--primary-soft);padding:3px 8px;border-radius:7px;border:1px solid var(--primary-border);">
-                Show All
-              </button>
-            </div>
-
-            <!-- Proportional Stacked Bar -->
-            <div id="categoryStackedBar" class="stacked-bar"></div>
-
-            <!-- 2-Column Category Breakdown Graph Cards -->
-            <div id="categoryGraphLegend" class="cat-grid"></div>
-          </div>
-
-          <div class="list-card">
-            <div class="list-card-header">
-              <span id="catFilteredTitle">All Logged Expenses (0)</span>
-              <span style="font-size:9.5px;text-transform:none;color:var(--primary);">Tap ✎ to edit any expense</span>
-            </div>
-            <div id="categoryExpensesList" class="scroll-area"></div>
-          </div>
-        </section>
-
-        <!-- ===================================================== -->
-        <!-- TAB 6: MASTER EDITABLE LEDGER (ALL EXPENSES & POOL)   -->
-        <!-- ===================================================== -->
-        <section id="tab-ledger" class="tab-panel">
-          <div class="card" style="display:flex;flex-direction:column;gap:7px;">
-            <!-- Pool vs Direct Spend Bar -->
-            <div style="background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:6px 8px;">
-              <div style="display:flex;justify-content:space-between;font-size:10px;font-weight:700;margin-bottom:4px;">
-                <span id="ledgerPoolVsDirectLeft" style="color:var(--emerald);">Pool Spent: ₹0</span>
-                <span style="color:var(--text-muted);">Spend Source</span>
-                <span id="ledgerPoolVsDirectRight" style="color:var(--primary);">Direct Paid: ₹0</span>
-              </div>
-              <div style="width:100%;height:6px;background:#e2e8f0;border-radius:999px;overflow:hidden;display:flex;">
-                <div id="ledgerPoolBar" style="background:var(--emerald);height:100%;width:50%;"></div>
-                <div id="ledgerDirectBar" style="background:var(--primary);height:100%;width:50%;"></div>
-              </div>
-            </div>
-
-            <!-- Toggle: Edit Expenses vs Edit Pool Deposits -->
-            <div class="segmented">
-              <button type="button" id="ledgerBtnExpenses" onclick="window.switchLedgerSubView('expenses')" class="seg-btn active">
-                Expenses (<span id="ledgerExpCount">0</span>)
-              </button>
-              <button type="button" id="ledgerBtnPool" onclick="window.switchLedgerSubView('pool')" class="seg-btn">
-                Pool Logs (<span id="ledgerPoolCount">0</span>)
-              </button>
-            </div>
-
-            <!-- Search & Payer Filter -->
-            <div style="display:flex;gap:6px;">
-              <input id="ledgerSearchInput" type="text" placeholder="Search reason, member, category..."
-                oninput="window.handleLedgerSearch(this.value)" class="input-box" style="flex:1;padding:6px 9px;font-size:12px;" />
-              <select id="ledgerPayerFilter" onchange="window.renderAll()" class="select-box" style="width:120px;padding:6px 6px;font-size:11.5px;">
-                <option value="ALL">All Payers</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="list-card">
-            <div class="list-card-header">
-              <span id="ledgerListHeaderTitle">All Logged Expenses</span>
-              <span style="font-size:9.5px;text-transform:none;color:var(--primary);">Tap ✎ or 🗑</span>
-            </div>
-            <div id="masterLedgerList" class="scroll-area"></div>
-          </div>
-        </section>
-
-      </main>
-
-      <!-- ================= 6-TAB BOTTOM NAVIGATION BAR ================= -->
-      <nav class="bottom-nav" id="bottomNavBar">
-        <button type="button" data-tab="tab-expense" id="nav-tab-expense" onclick="window.switchTab('tab-expense')" class="nav-tab-btn active">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
-          </svg>
-          <span>1. Add</span>
-        </button>
-
-        <button type="button" data-tab="tab-members" id="nav-tab-members" onclick="window.switchTab('tab-members')" class="nav-tab-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
-          <span>2. Shares</span>
-        </button>
-
-        <button type="button" data-tab="tab-pool" id="nav-tab-pool" onclick="window.switchTab('tab-pool')" class="nav-tab-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
-          </svg>
-          <span>3. Pool</span>
-        </button>
-
-        <button type="button" data-tab="tab-settle" id="nav-tab-settle" onclick="window.switchTab('tab-settle')" class="nav-tab-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>
-          </svg>
-          <span>4. Settle</span>
-        </button>
-
-        <button type="button" data-tab="tab-categories" id="nav-tab-categories" onclick="window.switchTab('tab-categories')" class="nav-tab-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
-          </svg>
-          <span>5. Graph</span>
-        </button>
-
-        <button type="button" data-tab="tab-ledger" id="nav-tab-ledger" onclick="window.switchTab('tab-ledger')" class="nav-tab-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-          </svg>
-          <span>6. Edit All</span>
-        </button>
-      </nav>
-
-      <!-- ================= TOAST BANNER ================= -->
-      <div id="toastBanner" class="toast">Saved!</div>
-
-      <!-- ================= MODAL OVERLAY ================= -->
-      <div id="appModal" class="modal-backdrop">
-        <div id="modalContent" class="modal-card"></div>
+          <div id="expSplitChips" class="chips-wrap"></div>
+        </div>
+        <button type="button" class="btn-primary" onclick="addExpense()">+ Save Expense</button>
       </div>
 
+      <div class="card">
+        <div class="card-title">
+          <span>Recent Expenses</span>
+          <button type="button" class="mini-link" onclick="switchTab(6)">Edit All →</button>
+        </div>
+        <div id="recentExpensesList"></div>
+      </div>
+    </section>
+
+    <!-- TAB 2: MEMBERS & FAMILY SHARES -->
+    <section id="tab-2" class="tab-pane">
+      <div class="card">
+        <div class="card-title">Add Member / Family Unit</div>
+        <div class="form-grid-2">
+          <div>
+            <label class="field-label">Member / Family Name</label>
+            <input type="text" id="memName" placeholder="e.g. Rajarshi Family" />
+          </div>
+          <div>
+            <label class="field-label">Family Shares (1, 2, 3, 4...)</label>
+            <select id="memShares">
+              <option value="1">1 Share (Solo)</option>
+              <option value="2">2 Shares (Couple)</option>
+              <option value="3" selected>3 Shares (Family of 3)</option>
+              <option value="4">4 Shares (Family of 4)</option>
+              <option value="5">5 Shares (Family of 5)</option>
+            </select>
+          </div>
+        </div>
+        <button type="button" class="btn-primary" onclick="addMember()">+ Add Member</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>Group Members & Share Weights</span>
+          <span id="membersTotalBadge" style="color:var(--primary);"></span>
+        </div>
+        <div id="membersList"></div>
+      </div>
+    </section>
+
+    <!-- TAB 3: POOLED FUND DEPOSITS -->
+    <section id="tab-3" class="tab-pane">
+      <div class="card" style="background:linear-gradient(135deg,#064e3b,#0f172a);border-color:#059669;">
+        <div class="card-title" style="color:#a7f3d0;">Pooled Fund Status</div>
+        <div class="kpi-strip">
+          <div class="kpi-box" style="background:rgba(0,0,0,0.25);">
+            <div class="kpi-label">Deposited</div>
+            <div class="kpi-val" id="poolTotalIn">₹0</div>
+          </div>
+          <div class="kpi-box" style="background:rgba(0,0,0,0.25);">
+            <div class="kpi-label">Pool Spent</div>
+            <div class="kpi-val" id="poolTotalOut" style="color:#fca5a5;">₹0</div>
+          </div>
+          <div class="kpi-box" style="background:rgba(0,0,0,0.25);">
+            <div class="kpi-label">Cash Left</div>
+            <div class="kpi-val" id="poolBalance" style="color:#6ee7b7;">₹0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Add Money to Pooled Fund</div>
+        <div class="form-row">
+          <label class="field-label">Member Paying into Pool</label>
+          <select id="depMember"></select>
+        </div>
+        <div class="form-grid-2">
+          <div>
+            <label class="field-label">Amount Deposited (₹)</label>
+            <input type="number" id="depAmount" placeholder="e.g. 5000" inputmode="decimal" />
+          </div>
+          <div>
+            <label class="field-label">Date</label>
+            <input type="date" id="depDate" />
+          </div>
+        </div>
+        <div class="form-row">
+          <label class="field-label">Note (Optional)</label>
+          <input type="text" id="depNote" placeholder="e.g. Initial cash pool" />
+        </div>
+        <button type="button" class="btn-primary" onclick="addDeposit()">+ Record Pool Deposit</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Pool Deposit History</div>
+        <div id="depositsList"></div>
+      </div>
+    </section>
+
+    <!-- TAB 4: WHO OWES WHOM (SETTLEMENTS) -->
+    <section id="tab-4" class="tab-pane">
+      <div class="card">
+        <div class="card-title">
+          <span>Final Settlement Plan</span>
+          <button type="button" class="mini-link" onclick="copySettlementSummary()">📋 Copy for WhatsApp</button>
+        </div>
+        <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">
+          Accounts for direct expenses paid, money contributed to the Pooled Fund, weighted family shares, and remaining pool cash.
+        </p>
+        <div id="settlementTransfersList"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Member-Wise Net Breakdown</div>
+        <div id="memberNetTable"></div>
+      </div>
+    </section>
+
+    <!-- TAB 5: CATEGORY GRAPH + EDIT EXPENSES -->
+    <section id="tab-5" class="tab-pane">
+      <div class="card">
+        <div class="card-title">
+          <span>Expenses by Category</span>
+          <button type="button" class="mini-link" onclick="setCatFilter('ALL')">Show All</button>
+        </div>
+        <div id="catStackedBar" class="stacked-bar"></div>
+        <div id="catBreakdownGrid" class="cat-grid"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span id="catFilteredTitle">All Logged Expenses (Tap to Edit)</span>
+        </div>
+        <div id="graphExpensesList"></div>
+      </div>
+    </section>
+
+    <!-- TAB 6: MASTER EDITABLE LEDGER -->
+    <section id="tab-6" class="tab-pane">
+      <div class="card">
+        <div class="card-title">Search & Filter Master Ledger</div>
+        <div class="form-grid-2">
+          <input type="text" id="ledgerSearch" placeholder="Search reason/payer..." oninput="renderMasterLedger()" />
+          <select id="ledgerType" onchange="renderMasterLedger()">
+            <option value="expenses">All Expenses</option>
+            <option value="deposits">Pool Deposits</option>
+          </select>
+        </div>
+        <div id="masterLedgerList"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 6-Tab Bottom Navigation -->
+  <nav class="bottom-nav">
+    <button type="button" class="nav-btn active" data-tab="1" onclick="switchTab(1)">
+      <span class="nav-icon">➕</span><span>1. Add</span>
+    </button>
+    <button type="button" class="nav-btn" data-tab="2" onclick="switchTab(2)">
+      <span class="nav-icon">👨‍👩‍👧</span><span>2. Shares</span>
+    </button>
+    <button type="button" class="nav-btn" data-tab="3" onclick="switchTab(3)">
+      <span class="nav-icon">🏦</span><span>3. Pool</span>
+    </button>
+    <button type="button" class="nav-btn" data-tab="4" onclick="switchTab(4)">
+      <span class="nav-icon">🤝</span><span>4. Settle</span>
+    </button>
+    <button type="button" class="nav-btn" data-tab="5" onclick="switchTab(5)">
+      <span class="nav-icon">📊</span><span>5. Graph</span>
+    </button>
+    <button type="button" class="nav-btn" data-tab="6" onclick="switchTab(6)">
+      <span class="nav-icon">✏️</span><span>6. Edit All</span>
+    </button>
+  </nav>
+</div>
+
+<!-- EDIT EXPENSE MODAL -->
+<div id="editExpenseModal" class="modal-backdrop">
+  <div class="modal-box">
+    <div class="card-title">
+      <span>Edit Logged Expense</span>
+      <button type="button" class="icon-btn" onclick="closeEditModal()">✕</button>
+    </div>
+    <input type="hidden" id="editExpId" />
+    <div class="form-row">
+      <label class="field-label">Paid By</label>
+      <select id="editExpPayer"></select>
+    </div>
+    <div class="form-grid-2">
+      <div>
+        <label class="field-label">Amount (₹)</label>
+        <input type="number" id="editExpAmount" inputmode="decimal" />
+      </div>
+      <div>
+        <label class="field-label">Date</label>
+        <input type="date" id="editExpDate" />
+      </div>
+    </div>
+    <div class="form-row">
+      <label class="field-label">Reason</label>
+      <input type="text" id="editExpReason" />
+    </div>
+    <div class="form-row">
+      <label class="field-label">Category</label>
+      <select id="editExpCat"></select>
+    </div>
+    <div class="form-row">
+      <label class="field-label">Split Between Members</label>
+      <div id="editExpSplitChips" class="chips-wrap"></div>
+    </div>
+    <div class="form-grid-2" style="margin-top:10px;">
+      <button type="button" class="btn-primary" onclick="saveEditedExpense()">Save Changes</button>
+      <button type="button" class="btn-primary" style="background:var(--rose);color:#fff;" onclick="deleteEditedExpense()">Delete</button>
     </div>
   </div>
+</div>
 
-  <!-- ================= SELF-CONTAINED JAVASCRIPT ================= -->
-  <script>
-    (function () {
-      var STORAGE_KEY = 'tripsplit_offline_v2';
-      var memoryFallbackStore = null;
+<!-- CLOUD SYNC & BACKUP MODAL -->
+<div id="syncModal" class="modal-backdrop">
+  <div class="modal-box">
+    <div class="card-title">
+      <span>☁️ Google Sheets Live Sync Setup</span>
+      <button type="button" class="icon-btn" onclick="closeSyncModal()">✕</button>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:8px;">
+      Paste your deployed Google Apps Script Web App URL (`https://script.google.com/macros/s/.../exec`) below so everyone on the trip shares the same live Google Sheet.
+    </p>
+    <div class="form-row">
+      <label class="field-label">Google Apps Script Web App URL</label>
+      <input type="url" id="scriptUrlInput" placeholder="https://script.google.com/macros/s/.../exec" />
+    </div>
+    <div class="form-grid-2" style="margin-bottom:8px;">
+      <button type="button" class="btn-primary" onclick="saveScriptUrl()">Connect & Pull</button>
+      <button type="button" class="btn-primary" style="background:var(--emerald);color:#042f2e;" onclick="pushAllToCloud()">Push Local → Sheet</button>
+    </div>
+    <button type="button" class="pill-btn" style="width:100%;justify-content:center;padding:8px;margin-bottom:8px;" onclick="copyShareableGroupLink()">
+      🔗 Copy Group Link (Auto-Connects Friends' Phones)
+    </button>
+    <hr style="border:none;border-top:1px solid var(--border);margin:10px 0;" />
+    <div class="card-title">Offline JSON Backup / Restore</div>
+    <div class="form-grid-2">
+      <button type="button" class="pill-btn" style="justify-content:center;padding:8px;" onclick="exportJsonBackup()">⬇️ Export JSON</button>
+      <label class="pill-btn" style="justify-content:center;padding:8px;cursor:pointer;">
+        ⬆️ Import JSON
+        <input type="file" accept=".json" style="display:none;" onchange="importJsonBackup(event)" />
+      </label>
+    </div>
+  </div>
+</div>
 
-      // Safe localStorage wrapper that never crashes on file:// or content://
-      var SafeStorage = {
-        get: function () {
-          try {
-            if (window.localStorage) {
-              var raw = window.localStorage.getItem(STORAGE_KEY);
-              if (raw) return JSON.parse(raw);
-            }
-          } catch (err) {
-            // Fallback to in-memory if localStorage is blocked
-          }
-          return memoryFallbackStore;
-        },
-        set: function (data) {
-          memoryFallbackStore = data;
-          try {
-            if (window.localStorage) {
-              window.localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-            }
-          } catch (err) {
-            // Ignore storage security errors in restricted WebViews
-          }
+<div id="toast" class="toast">Saved!</div>
+
+<script>
+  // Optional: Paste your Google Apps Script URL directly inside the quotes below before uploading to GitHub
+  const DEFAULT_SCRIPT_URL = "";
+
+  const CATEGORIES = [
+    { name: "Food & Drinks", icon: "🍽️", color: "#38bdf8", keywords: ["food", "dinner", "lunch", "breakfast", "snack", "tea", "coffee", "cafe", "dhaba", "restaurant", "drinks", "water", "pizza", "burger"] },
+    { name: "Transport & Fuel", icon: "⛽", color: "#f59e0b", keywords: ["fuel", "petrol", "diesel", "toll", "fastag", "cab", "taxi", "uber", "ola", "bus", "train", "flight", "parking", "auto", "ferry"] },
+    { name: "Stay & Hotel", icon: "🏨", color: "#a855f7", keywords: ["hotel", "resort", "stay", "room", "villa", "homestay", "cottage", "camp", "tent", "lodge", "airbnb"] },
+    { name: "Activities & Sightseeing", icon: "🎟️", color: "#10b981", keywords: ["ticket", "entry", "park", "safari", "ropeway", "boating", "guide", "trek", "museum", "scuba", "kayak", "ride"] },
+    { name: "Shopping & Misc", icon: "🛍️", color: "#ec4899", keywords: ["shop", "gift", "souvenir", "tip", "laundry", "sim", "misc", "market"] },
+    { name: "Medical & Emergency", icon: "💊", color: "#f43f5e", keywords: ["med", "tablet", "pharmacy", "doctor", "first aid", "bandage", "ors"] }
+  ];
+
+  // Safe local storage wrapper
+  const SafeStore = {
+    mem: {},
+    get(k) {
+      try { return localStorage.getItem(k); } catch(e) { return this.mem[k] || null; }
+    },
+    set(k, v) {
+      try { localStorage.setItem(k, v); } catch(e) { this.mem[k] = v; }
+    }
+  };
+
+  let state = {
+    members: [
+      { id: "mem_1", name: "Rajarshi Family", shares: 3 },
+      { id: "mem_2", name: "Amit Family", shares: 2 },
+      { id: "mem_3", name: "Rahul", shares: 1 }
+    ],
+    expenses: [
+      { id: "exp_1001", date: todayStr(), payer: "POOL", amount: 4500, reason: "Dinner at Highway Dhaba", category: "Food & Drinks", splitMembers: ["mem_1", "mem_2", "mem_3"] },
+      { id: "exp_1002", date: todayStr(), payer: "mem_1", amount: 2800, reason: "SUV Fuel & Fastag Toll", category: "Transport & Fuel", splitMembers: ["mem_1", "mem_2", "mem_3"] }
+    ],
+    deposits: [
+      { id: "dep_2001", date: todayStr(), memberName: "mem_1", amount: 9000, note: "Initial Pool (3x)" },
+      { id: "dep_2002", date: todayStr(), memberName: "mem_2", amount: 6000, note: "Initial Pool (2x)" },
+      { id: "dep_2003", date: todayStr(), memberName: "mem_3", amount: 3000, note: "Initial Pool (1x)" }
+    ]
+  };
+
+  let currentCatIndex = 0;
+  let selectedSplitIds = new Set();
+  let editSelectedSplitIds = new Set();
+  let activeCategoryFilter = "ALL";
+
+  function todayStr() {
+    return new Date().toISOString().split("T")[0];
+  }
+
+  function getScriptUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const urlParam = params.get("api");
+    if (urlParam && urlParam.startsWith("https://script.google.com")) {
+      SafeStore.set("trip_script_url", urlParam.trim());
+      return urlParam.trim();
+    }
+    return SafeStore.get("trip_script_url") || DEFAULT_SCRIPT_URL || "";
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.style.display = "block";
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => { t.style.display = "none"; }, 2200);
+  }
+
+  function saveLocalState() {
+    SafeStore.set("trip_split_state_v2", JSON.stringify(state));
+  }
+
+  function loadLocalState() {
+    const raw = SafeStore.get("trip_split_state_v2");
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        if (parsed.members && parsed.expenses && parsed.deposits) {
+          state = parsed;
         }
+      } catch (e) {}
+    }
+  }
+
+  function switchTab(tabNum) {
+    document.querySelectorAll(".tab-pane").forEach(el => el.classList.remove("active"));
+    document.querySelectorAll(".nav-btn").forEach(el => el.classList.remove("active"));
+    const target = document.getElementById("tab-" + tabNum);
+    if (target) target.classList.add("active");
+    const btn = document.querySelector(`.nav-btn[data-tab="${tabNum}"]`);
+    if (btn) btn.classList.add("active");
+    renderAll();
+  }
+
+  // Auto-categorize based on reason text
+  function detectCategoryIndex(text) {
+    const lower = (text || "").toLowerCase();
+    for (let i = 0; i < CATEGORIES.length; i++) {
+      if (CATEGORIES[i].keywords.some(k => lower.includes(k))) {
+        return i;
+      }
+    }
+    return 0;
+  }
+
+  function handleReasonInput() {
+    const text = document.getElementById("expReason").value;
+    currentCatIndex = detectCategoryIndex(text);
+    updateCatBadgeUI();
+  }
+
+  function cycleCategory() {
+    currentCatIndex = (currentCatIndex + 1) % CATEGORIES.length;
+    updateCatBadgeUI();
+  }
+
+  function updateCatBadgeUI() {
+    const cat = CATEGORIES[currentCatIndex];
+    const badge = document.getElementById("expCatBadge");
+    badge.textContent = `${cat.icon} ${cat.name}`;
+  }
+
+  function toggleAllSplit(selectAll) {
+    if (selectAll) {
+      state.members.forEach(m => selectedSplitIds.add(m.id));
+    } else {
+      selectedSplitIds.clear();
+    }
+    renderSplitChips();
+    updateSharePreview();
+  }
+
+  function renderSplitChips() {
+    const wrap = document.getElementById("expSplitChips");
+    wrap.innerHTML = state.members.map(m => {
+      const sel = selectedSplitIds.has(m.id) ? "selected" : "";
+      return `<div class="member-chip ${sel}" onclick="toggleSplitMember('${m.id}')">
+        <span>${escapeHtml(m.name)}</span>
+        <span class="chip-weight">${m.shares}x</span>
+      </div>`;
+    }).join("");
+  }
+
+  function toggleSplitMember(id) {
+    if (selectedSplitIds.has(id)) selectedSplitIds.delete(id);
+    else selectedSplitIds.add(id);
+    renderSplitChips();
+    updateSharePreview();
+  }
+
+  function updateSharePreview() {
+    const amt = parseFloat(document.getElementById("expAmount").value) || 0;
+    let totalShares = 0;
+    state.members.forEach(m => {
+      if (selectedSplitIds.has(m.id)) totalShares += Number(m.shares);
+    });
+    const perShare = totalShares > 0 ? (amt / totalShares) : 0;
+    document.getElementById("livePerSharePreview").textContent =
+      `₹${perShare.toFixed(0)} / share (${totalShares} shares)`;
+  }
+
+  function getPoolMetrics() {
+    const totalIn = state.deposits.reduce((s, d) => s + Number(d.amount || 0), 0);
+    const poolSpent = state.expenses
+      .filter(e => e.payer === "POOL")
+      .reduce((s, e) => s + Number(e.amount || 0), 0);
+    return { totalIn, poolSpent, balance: totalIn - poolSpent };
+  }
+
+  function getMemberName(idOrPool) {
+    if (idOrPool === "POOL") return "🏦 Pooled Fund";
+    const m = state.members.find(x => x.id === idOrPool);
+    return m ? m.name : idOrPool;
+  }
+
+  function addExpense() {
+    const payer = document.getElementById("expPayer").value;
+    const amount = parseFloat(document.getElementById("expAmount").value);
+    const date = document.getElementById("expDate").value || todayStr();
+    const reason = document.getElementById("expReason").value.trim() || "Trip Expense";
+    const category = CATEGORIES[currentCatIndex].name;
+    const splitMembers = Array.from(selectedSplitIds);
+
+    if (!amount || amount <= 0) return showToast("Enter a valid amount");
+    if (splitMembers.length === 0) return showToast("Select at least 1 member to split");
+
+    const item = {
+      id: "exp_" + Date.now(),
+      date,
+      payer,
+      amount,
+      reason,
+      category,
+      splitMembers
+    };
+    state.expenses.unshift(item);
+    document.getElementById("expAmount").value = "";
+    document.getElementById("expReason").value = "";
+    saveLocalState();
+    renderAll();
+    showToast("Expense logged!");
+    syncActionToCloud({ action: "upsert", type: "expense", item });
+  }
+
+  function addMember() {
+    const name = document.getElementById("memName").value.trim();
+    const shares = parseInt(document.getElementById("memShares").value, 10) || 1;
+    if (!name) return showToast("Enter member or family name");
+
+    const item = { id: "mem_" + Date.now(), name, shares };
+    state.members.push(item);
+    selectedSplitIds.add(item.id);
+    document.getElementById("memName").value = "";
+    saveLocalState();
+    renderAll();
+    showToast("Member added!");
+    syncActionToCloud({ action: "upsert", type: "member", item });
+  }
+
+  function changeMemberShares(id, delta) {
+    const m = state.members.find(x => x.id === id);
+    if (!m) return;
+    m.shares = Math.max(1, Number(m.shares) + delta);
+    saveLocalState();
+    renderAll();
+    syncActionToCloud({ action: "upsert", type: "member", item: m });
+  }
+
+  function removeMember(id) {
+    if (state.members.length <= 1) return showToast("Keep at least 1 member");
+    state.members = state.members.filter(x => x.id !== id);
+    selectedSplitIds.delete(id);
+    saveLocalState();
+    renderAll();
+    syncActionToCloud({ action: "delete", type: "member", id });
+  }
+
+  function addDeposit() {
+    const memberName = document.getElementById("depMember").value;
+    const amount = parseFloat(document.getElementById("depAmount").value);
+    const date = document.getElementById("depDate").value || todayStr();
+    const note = document.getElementById("depNote").value.trim();
+
+    if (!amount || amount <= 0) return showToast("Enter valid deposit amount");
+    const item = { id: "dep_" + Date.now(), date, memberName, amount, note };
+    state.deposits.unshift(item);
+    document.getElementById("depAmount").value = "";
+    document.getElementById("depNote").value = "";
+    saveLocalState();
+    renderAll();
+    showToast("Pool deposit added!");
+    syncActionToCloud({ action: "upsert", type: "deposit", item });
+  }
+
+  function deleteDeposit(id) {
+    state.deposits = state.deposits.filter(d => d.id !== id);
+    saveLocalState();
+    renderAll();
+    showToast("Deposit deleted");
+    syncActionToCloud({ action: "delete", type: "deposit", id });
+  }
+
+  // Settlement Engine
+  function computeSettlements() {
+    const stats = {};
+    state.members.forEach(m => {
+      stats[m.id] = {
+        id: m.id,
+        name: m.name,
+        shares: Number(m.shares),
+        directPaid: 0,
+        poolDeposited: 0,
+        fairShare: 0,
+        net: 0
       };
+    });
 
-      // Category Rules & Visual Styles
-      var CATEGORY_RULES = [
-        {
-          id: 'Food & Dining',
-          shortName: 'Food',
-          emoji: '🍽️',
-          pillClass: 'cat-food',
-          barClass: 'bar-food',
-          keywords: ['food', 'dinner', 'lunch', 'breakfast', 'brunch', 'cafe', 'coffee', 'tea', 'restaurant', 'shack', 'pizza', 'burger', 'snacks', 'drinks', 'beer', 'thali', 'biryani', 'dessert', 'ice cream', 'water', 'meal', 'bar', 'dine']
-        },
-        {
-          id: 'Transport & Fuel',
-          shortName: 'Travel',
-          emoji: '🚕',
-          pillClass: 'cat-transport',
-          barClass: 'bar-transport',
-          keywords: ['cab', 'taxi', 'uber', 'ola', 'auto', 'bus', 'train', 'flight', 'fuel', 'petrol', 'diesel', 'gas', 'toll', 'parking', 'scooter', 'bike', 'rental', 'car', 'ferry', 'metro', 'transfer']
-        },
-        {
-          id: 'Stay & Hotel',
-          shortName: 'Stay',
-          emoji: '🏨',
-          pillClass: 'cat-stay',
-          barClass: 'bar-stay',
-          keywords: ['hotel', 'resort', 'villa', 'airbnb', 'hostel', 'stay', 'room', 'lodge', 'camping', 'tent', 'checkin', 'booking', 'homestay']
-        },
-        {
-          id: 'Tickets & Fun',
-          shortName: 'Fun',
-          emoji: '🎟️',
-          pillClass: 'cat-fun',
-          barClass: 'bar-fun',
-          keywords: ['ticket', 'entry', 'museum', 'park', 'cruise', 'boat', 'safari', 'show', 'movie', 'adventure', 'kayak', 'scuba', 'watersports', 'tour', 'guide', 'pass', 'activity', 'club']
-        },
-        {
-          id: 'Shopping & Groceries',
-          shortName: 'Shop',
-          emoji: '🛍️',
-          pillClass: 'cat-shop',
-          barClass: 'bar-shop',
-          keywords: ['shopping', 'market', 'souvenir', 'gift', 'grocery', 'supermarket', 'chips', 'fruits', 'milk', 'medicine', 'pharmacy', 'store', 'mall', 'clothes']
-        },
-        {
-          id: 'Misc',
-          shortName: 'Misc',
-          emoji: '🏷️',
-          pillClass: 'cat-misc',
-          barClass: 'bar-misc',
-          keywords: []
-        }
-      ];
-
-      // App State Variables
-      var state = null;
-      var selectedSplitMemberIds = [];
-      var newMemberShareWeight = 1;
-      var currentDetectedCategory = 'Misc';
-      var manualCategoryOverride = false;
-      var selectedCategoryFilter = 'ALL';
-      var currentLedgerSubView = 'expenses';
-      var ledgerSearchQuery = '';
-      var editingSplitMemberIds = [];
-      var toastTimer = null;
-
-      function getTodayISO() {
-        var d = new Date();
-        var yyyy = d.getFullYear();
-        var mm = String(d.getMonth() + 1).padStart(2, '0');
-        var dd = String(d.getDate()).padStart(2, '0');
-        return yyyy + '-' + mm + '-' + dd;
+    // 1. Add pool deposits made by each member
+    state.deposits.forEach(d => {
+      if (stats[d.memberName]) {
+        stats[d.memberName].poolDeposited += Number(d.amount || 0);
       }
+    });
 
-      function getSampleState() {
-        var today = getTodayISO();
-        return {
-          tripTitle: 'Goa Friends & Family Trip',
-          currency: '₹',
-          members: [
-            { id: 'm1', name: 'Aarav', shares: 1 },
-            { id: 'm2', name: 'Priya & Dev', shares: 2 },
-            { id: 'm3', name: 'Rohan Family', shares: 3 },
-            { id: 'm4', name: 'Neha & Kid', shares: 2 }
-          ],
-          poolContributions: [
-            { id: 'p1', memberId: 'm1', amount: 2000, date: today },
-            { id: 'p2', memberId: 'm2', amount: 4000, date: today },
-            { id: 'p3', memberId: 'm3', amount: 6000, date: today },
-            { id: 'p4', memberId: 'm4', amount: 4000, date: today }
-          ],
-          expenses: [
-            {
-              id: 'e1',
-              paidBy: 'POOL',
-              amount: 9600,
-              reason: 'Beach Resort Villa Advance',
-              category: 'Stay & Hotel',
-              splitMemberIds: ['m1', 'm2', 'm3', 'm4'],
-              date: today
-            },
-            {
-              id: 'e2',
-              paidBy: 'POOL',
-              amount: 3200,
-              reason: 'Seafood Dinner at Beach Shack',
-              category: 'Food & Dining',
-              splitMemberIds: ['m1', 'm2', 'm3', 'm4'],
-              date: today
-            },
-            {
-              id: 'e3',
-              paidBy: 'm2',
-              amount: 2400,
-              reason: 'SUV Cab & Highway Toll',
-              category: 'Transport & Fuel',
-              splitMemberIds: ['m1', 'm2', 'm3', 'm4'],
-              date: today
-            },
-            {
-              id: 'e4',
-              paidBy: 'm1',
-              amount: 1500,
-              reason: 'Dolphin Cruise Tickets',
-              category: 'Tickets & Fun',
-              splitMemberIds: ['m1', 'm3', 'm4'],
-              date: today
-            }
-          ]
-        };
+    // 2. Process all expenses
+    state.expenses.forEach(e => {
+      const amt = Number(e.amount || 0);
+      if (e.payer !== "POOL" && stats[e.payer]) {
+        stats[e.payer].directPaid += amt;
       }
-
-      function loadState() {
-        var saved = SafeStorage.get();
-        if (saved && saved.members && saved.expenses && saved.poolContributions) {
-          state = saved;
-        } else {
-          state = getSampleState();
-          SafeStorage.set(state);
-        }
-        selectedSplitMemberIds = state.members.map(function (m) { return m.id; });
-      }
-
-      function saveState() {
-        SafeStorage.set(state);
-      }
-
-      function escapeHtml(str) {
-        return String(str || '')
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;');
-      }
-
-      function fmtMoney(val) {
-        var num = Number(val) || 0;
-        var sign = num < 0 ? '-' : '';
-        var absVal = Math.abs(num);
-        var rounded = Math.round(absVal * 100) / 100;
-        var str = (rounded % 1 === 0)
-          ? rounded.toLocaleString('en-IN')
-          : rounded.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        return sign + (state ? state.currency : '₹') + str;
-      }
-
-      function fmtShortDate(dateStr) {
-        if (!dateStr) return '';
-        var parts = dateStr.split('-');
-        if (parts.length !== 3) return dateStr;
-        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        var mIdx = parseInt(parts[1], 10) - 1;
-        return parts[2] + ' ' + (months[mIdx] || '');
-      }
-
-      function showToast(msg) {
-        var el = document.getElementById('toastBanner');
-        if (!el) return;
-        el.textContent = msg;
-        el.classList.add('show');
-        if (toastTimer) clearTimeout(toastTimer);
-        toastTimer = setTimeout(function () {
-          el.classList.remove('show');
-        }, 2200);
-      }
-
-      function getCategoryMeta(catId) {
-        for (var i = 0; i < CATEGORY_RULES.length; i++) {
-          if (CATEGORY_RULES[i].id === catId) return CATEGORY_RULES[i];
-        }
-        return CATEGORY_RULES[CATEGORY_RULES.length - 1];
-      }
-
-      function detectCategoryFromReason(text) {
-        var lower = String(text || '').toLowerCase();
-        if (!lower.trim()) return 'Misc';
-        for (var i = 0; i < CATEGORY_RULES.length; i++) {
-          var cat = CATEGORY_RULES[i];
-          for (var j = 0; j < cat.keywords.length; j++) {
-            if (lower.indexOf(cat.keywords[j]) !== -1) {
-              return cat.id;
-            }
-          }
-        }
-        return 'Misc';
-      }
-
-      // ================= TAB NAVIGATION (BULLETPROOF) =================
-      window.switchTab = function (tabId) {
-        var panels = document.querySelectorAll('.tab-panel');
-        for (var i = 0; i < panels.length; i++) {
-          if (panels[i].id === tabId) {
-            panels[i].classList.add('active');
-          } else {
-            panels[i].classList.remove('active');
-          }
-        }
-
-        var buttons = document.querySelectorAll('.nav-tab-btn');
-        for (var j = 0; j < buttons.length; j++) {
-          var target = buttons[j].getAttribute('data-tab');
-          if (target === tabId) {
-            buttons[j].classList.add('active');
-          } else {
-            buttons[j].classList.remove('active');
-          }
-        }
-
-        window.renderAll();
-      };
-
-      // ================= FINANCIAL & SETTLEMENT ENGINE =================
-      function calculateTripFinancials() {
-        var membersMap = {};
-        var totalGroupShares = 0;
-
-        for (var i = 0; i < state.members.length; i++) {
-          var m = state.members[i];
-          totalGroupShares += m.shares;
-          membersMap[m.id] = {
-            id: m.id,
-            name: m.name,
-            shares: m.shares,
-            poolPaid: 0,
-            directPaid: 0,
-            totalPaid: 0,
-            consumedShare: 0,
-            netBalance: 0
-          };
-        }
-
-        var totalPoolIn = 0;
-        for (var pIdx = 0; pIdx < state.poolContributions.length; pIdx++) {
-          var p = state.poolContributions[pIdx];
-          var pAmt = Number(p.amount) || 0;
-          totalPoolIn += pAmt;
-          if (membersMap[p.memberId]) {
-            membersMap[p.memberId].poolPaid += pAmt;
-          }
-        }
-
-        var totalPoolOut = 0;
-        var totalDirectOut = 0;
-
-        for (var eIdx = 0; eIdx < state.expenses.length; eIdx++) {
-          var exp = state.expenses[eIdx];
-          var eAmt = Number(exp.amount) || 0;
-
-          if (exp.paidBy === 'POOL') {
-            totalPoolOut += eAmt;
-          } else if (membersMap[exp.paidBy]) {
-            membersMap[exp.paidBy].directPaid += eAmt;
-            totalDirectOut += eAmt;
-          }
-
-          var splitIds = exp.splitMemberIds || [];
-          var expShares = 0;
-          for (var s = 0; s < splitIds.length; s++) {
-            if (membersMap[splitIds[s]]) {
-              expShares += membersMap[splitIds[s]].shares;
-            }
-          }
-
-          if (expShares > 0) {
-            for (var k = 0; k < splitIds.length; k++) {
-              var mId = splitIds[k];
-              if (membersMap[mId]) {
-                var weight = membersMap[mId].shares;
-                membersMap[mId].consumedShare += eAmt * (weight / expShares);
-              }
-            }
-          }
-        }
-
-        var poolBalance = totalPoolIn - totalPoolOut;
-        var totalTripExpense = totalPoolOut + totalDirectOut;
-
-        var debtors = [];
-        var creditors = [];
-
-        for (var mIdx = 0; mIdx < state.members.length; mIdx++) {
-          var mem = membersMap[state.members[mIdx].id];
-          mem.totalPaid = mem.poolPaid + mem.directPaid;
-          mem.netBalance = mem.totalPaid - mem.consumedShare;
-
-          if (mem.netBalance < -0.01) {
-            debtors.push({ id: mem.id, name: mem.name, amount: Math.abs(mem.netBalance), isPool: false });
-          } else if (mem.netBalance > 0.01) {
-            creditors.push({ id: mem.id, name: mem.name, amount: mem.netBalance, isPool: false });
-          }
-        }
-
-        debtors.sort(function (a, b) { return b.amount - a.amount; });
-        creditors.sort(function (a, b) { return b.amount - a.amount; });
-
-        if (poolBalance > 0.01) {
-          debtors.unshift({ id: 'POOL', name: 'Pooled Fund (Cash Left)', amount: poolBalance, isPool: true });
-        } else if (poolBalance < -0.01) {
-          creditors.unshift({ id: 'POOL', name: 'Pooled Fund (Deficit)', amount: Math.abs(poolBalance), isPool: true });
-        }
-
-        var settlements = [];
-        var d = 0;
-        var c = 0;
-        while (d < debtors.length && c < creditors.length) {
-          var debtor = debtors[d];
-          var creditor = creditors[c];
-          var settled = Math.min(debtor.amount, creditor.amount);
-
-          if (settled > 0.01) {
-            settlements.push({
-              fromName: debtor.name,
-              fromIsPool: debtor.isPool,
-              toName: creditor.name,
-              toIsPool: creditor.isPool,
-              amount: settled
-            });
-          }
-
-          debtor.amount -= settled;
-          creditor.amount -= settled;
-          if (debtor.amount < 0.01) d++;
-          if (creditor.amount < 0.01) c++;
-        }
-
-        return {
-          membersMap: membersMap,
-          totalGroupShares: totalGroupShares,
-          totalPoolIn: totalPoolIn,
-          totalPoolOut: totalPoolOut,
-          poolBalance: poolBalance,
-          totalTripExpense: totalTripExpense,
-          settlements: settlements
-        };
-      }
-
-      // ================= MASTER RENDER =================
-      window.renderAll = function () {
-        var fin = calculateTripFinancials();
-
-        // Header Updates
-        document.getElementById('tripTitleDisplay').textContent = state.tripTitle;
-        document.getElementById('headerStatsMembers').textContent = state.members.length + ' Members (' + fin.totalGroupShares + ' sh)';
-        document.getElementById('headerStatsTotal').textContent = 'Spent: ' + fmtMoney(fin.totalTripExpense);
-
-        var headerPoolEl = document.getElementById('headerPoolBalance');
-        headerPoolEl.textContent = fmtMoney(fin.poolBalance);
-        headerPoolEl.style.color = fin.poolBalance >= 0 ? '#34d399' : '#fb7185';
-
-        document.getElementById('currencyPrefixExp').textContent = state.currency;
-        document.getElementById('currencyPrefixPool').textContent = state.currency;
-
-        renderExpenseTab(fin);
-        renderMembersTab(fin);
-        renderPoolTab(fin);
-        renderSettlementsTab(fin);
-        renderCategoriesTab(fin);
-        renderLedgerTab(fin);
-      };
-
-      // --- TAB 1: EXPENSE TAB ---
-      function renderExpenseTab(fin) {
-        var paidBySelect = document.getElementById('expPaidBy');
-        var prevVal = paidBySelect.value || 'POOL';
-
-        var html = '<option value="POOL">🏦 Pooled Fund (' + fmtMoney(fin.poolBalance) + ' left)</option>';
-        for (var i = 0; i < state.members.length; i++) {
-          var m = state.members[i];
-          html += '<option value="' + m.id + '">👤 ' + escapeHtml(m.name) + ' (' + m.shares + 'x share)</option>';
-        }
-        paidBySelect.innerHTML = html;
-
-        var validPrev = (prevVal === 'POOL') || state.members.some(function (m) { return m.id === prevVal; });
-        paidBySelect.value = validPrev ? prevVal : 'POOL';
-        window.updatePaidByHint();
-
-        // Filter out any deleted members from selectedSplitMemberIds
-        selectedSplitMemberIds = selectedSplitMemberIds.filter(function (id) {
-          return state.members.some(function (m) { return m.id === id; });
+      const validIds = (e.splitMembers || []).filter(id => stats[id]);
+      const totalExpShares = validIds.reduce((s, id) => s + stats[id].shares, 0);
+      if (totalExpShares > 0) {
+        validIds.forEach(id => {
+          stats[id].fairShare += amt * (stats[id].shares / totalExpShares);
         });
-
-        var chipsHtml = '';
-        for (var j = 0; j < state.members.length; j++) {
-          var mem = state.members[j];
-          var isSel = selectedSplitMemberIds.indexOf(mem.id) !== -1;
-          chipsHtml += '<button type="button" onclick="window.toggleSplitMember(\'' + mem.id + '\')" class="split-chip ' + (isSel ? 'selected' : '') + '">' +
-            '<span>' + (isSel ? '✓ ' : '+ ') + escapeHtml(mem.name) + '</span>' +
-            '<span class="chip-badge">' + mem.shares + 'x</span>' +
-          '</button>';
-        }
-        document.getElementById('splitMembersContainer').innerHTML = chipsHtml;
-
-        window.updateSplitPreview();
-
-        document.getElementById('expenseCountBadge').textContent = state.expenses.length;
-        var listEl = document.getElementById('recentExpensesList');
-        if (state.expenses.length === 0) {
-          listEl.innerHTML = '<div style="padding:24px 8px;text-align:center;color:var(--text-muted);font-size:12px;">No expenses logged yet. Add your first expense above!</div>';
-          return;
-        }
-
-        var rev = state.expenses.slice().reverse();
-        listEl.innerHTML = rev.map(function (exp) {
-          return buildExpenseRowHtml(exp);
-        }).join('');
       }
+    });
 
-      function buildExpenseRowHtml(exp) {
-        var payerName = 'Pooled Fund';
-        var tagClass = 'tag-pool';
-        if (exp.paidBy !== 'POOL') {
-          tagClass = 'tag-member';
-          for (var i = 0; i < state.members.length; i++) {
-            if (state.members[i].id === exp.paidBy) {
-              payerName = state.members[i].name;
-              break;
-            }
-          }
-        }
+    // Total contributed by each member = directPaid + poolDeposited
+    // Wait: what if there is cash left (or deficit) in the Pool?
+    // Pool Cash Remaining is held by the Pool Treasurer / Cash Box, so we show both:
+    // (a) Net vs Trip Fair Share (Direct + Pool Deposit - Fair Share)
+    // (b) Exact settlements including Pool Cash Box
+    Object.values(stats).forEach(st => {
+      st.totalContributed = st.directPaid + st.poolDeposited;
+      st.net = st.totalContributed - st.fairShare;
+    });
 
-        var catMeta = getCategoryMeta(exp.category);
-        var splitNames = [];
-        var splitShares = 0;
-        var ids = exp.splitMemberIds || [];
-        for (var j = 0; j < ids.length; j++) {
-          for (var k = 0; k < state.members.length; k++) {
-            if (state.members[k].id === ids[j]) {
-              splitNames.push(state.members[k].name);
-              splitShares += state.members[k].shares;
-            }
-          }
-        }
-        var splitSummary = (splitNames.length === state.members.length)
-          ? 'All (' + splitShares + ' sh)'
-          : splitNames.join(', ') + ' (' + splitShares + ' sh)';
+    const pool = getPoolMetrics();
+    // Build debtors and creditors
+    let debtors = [];
+    let creditors = [];
 
-        return '<div class="item-row">' +
-          '<div class="item-left" onclick="window.openEditExpenseModal(\'' + exp.id + '\')">' +
-            '<div class="cat-icon-box ' + catMeta.pillClass + '">' + catMeta.emoji + '</div>' +
-            '<div style="min-width:0;flex:1;">' +
-              '<div class="item-title-row">' +
-                '<span class="item-title">' + escapeHtml(exp.reason) + '</span>' +
-                '<span class="item-date">' + fmtShortDate(exp.date) + '</span>' +
-              '</div>' +
-              '<div class="item-sub">' +
-                '<span class="mini-tag ' + tagClass + '">' + escapeHtml(payerName) + '</span>' +
-                '<span>→</span>' +
-                '<span style="overflow:hidden;text-overflow:ellipsis;">' + escapeHtml(splitSummary) + '</span>' +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-          '<div class="item-right">' +
-            '<span class="item-amount">' + fmtMoney(exp.amount) + '</span>' +
-            '<button type="button" class="action-icon-btn edit" onclick="window.openEditExpenseModal(\'' + exp.id + '\')" title="Edit">✎</button>' +
-            '<button type="button" class="action-icon-btn del" onclick="window.deleteExpense(\'' + exp.id + '\')" title="Delete">🗑</button>' +
-          '</div>' +
-        '</div>';
-      }
+    Object.values(stats).forEach(st => {
+      if (st.net < -0.5) debtors.push({ name: st.name, amount: -st.net });
+      else if (st.net > 0.5) creditors.push({ name: st.name, amount: st.net });
+    });
 
-      window.updatePaidByHint = function () {
-        var val = document.getElementById('expPaidBy').value;
-        var hint = document.getElementById('paidByPoolHint');
-        hint.style.display = (val === 'POOL') ? 'inline' : 'none';
-      };
+    // If Pool has leftover positive cash, the Pool Cash Box owes that back to creditors
+    if (pool.balance > 0.5) {
+      debtors.push({ name: "🏦 Pool Cash Leftover", amount: pool.balance });
+    } else if (pool.balance < -0.5) {
+      creditors.push({ name: "🏦 Pool Deficit", amount: -pool.balance });
+    }
 
-      window.handleReasonInput = function (val) {
-        if (!manualCategoryOverride) {
-          currentDetectedCategory = detectCategoryFromReason(val);
-          renderCategoryBadge();
-        }
-      };
+    debtors.sort((a, b) => b.amount - a.amount);
+    creditors.sort((a, b) => b.amount - a.amount);
 
-      window.cycleManualCategory = function () {
-        manualCategoryOverride = true;
-        var idx = 0;
-        for (var i = 0; i < CATEGORY_RULES.length; i++) {
-          if (CATEGORY_RULES[i].id === currentDetectedCategory) {
-            idx = i;
-            break;
-          }
-        }
-        currentDetectedCategory = CATEGORY_RULES[(idx + 1) % CATEGORY_RULES.length].id;
-        renderCategoryBadge();
-      };
-
-      function renderCategoryBadge() {
-        var meta = getCategoryMeta(currentDetectedCategory);
-        var badge = document.getElementById('autoCategoryBadge');
-        badge.className = 'cat-pill ' + meta.pillClass;
-        document.getElementById('autoCategoryText').textContent = meta.emoji + ' ' + (manualCategoryOverride ? '' : 'Auto: ') + meta.id;
-      }
-
-      window.toggleSplitMember = function (memberId) {
-        var idx = selectedSplitMemberIds.indexOf(memberId);
-        if (idx !== -1) {
-          selectedSplitMemberIds.splice(idx, 1);
-        } else {
-          selectedSplitMemberIds.push(memberId);
-        }
-        renderExpenseTab(calculateTripFinancials());
-      };
-
-      window.toggleAllSplitMembers = function () {
-        if (selectedSplitMemberIds.length === state.members.length) {
-          selectedSplitMemberIds = [];
-        } else {
-          selectedSplitMemberIds = state.members.map(function (m) { return m.id; });
-        }
-        renderExpenseTab(calculateTripFinancials());
-      };
-
-      window.updateSplitPreview = function () {
-        var totalShares = 0;
-        for (var i = 0; i < state.members.length; i++) {
-          if (selectedSplitMemberIds.indexOf(state.members[i].id) !== -1) {
-            totalShares += state.members[i].shares;
-          }
-        }
-        document.getElementById('splitShareCounter').textContent = '(' + totalShares + ' shares)';
-        document.getElementById('toggleAllSplitBtn').textContent = (selectedSplitMemberIds.length === state.members.length) ? 'Clear All' : 'Select All';
-
-        var amt = parseFloat(document.getElementById('expAmount').value) || 0;
-        var previewEl = document.getElementById('perSharePreview');
-        if (amt > 0 && totalShares > 0) {
-          previewEl.textContent = fmtMoney(amt / totalShares) + '/sh';
-        } else {
-          previewEl.textContent = '';
-        }
-      };
-
-      window.handleAddExpense = function (e) {
-        e.preventDefault();
-        if (selectedSplitMemberIds.length === 0) {
-          showToast('⚠️ Select at least 1 member to split with!');
-          return;
-        }
-        var paidBy = document.getElementById('expPaidBy').value;
-        var amount = parseFloat(document.getElementById('expAmount').value);
-        var date = document.getElementById('expDate').value || getTodayISO();
-        var reason = document.getElementById('expReason').value.trim();
-
-        if (!amount || amount <= 0 || !reason) return;
-
-        state.expenses.push({
-          id: 'exp_' + Date.now(),
-          paidBy: paidBy,
-          amount: amount,
-          reason: reason,
-          category: currentDetectedCategory,
-          splitMemberIds: selectedSplitMemberIds.slice(),
-          date: date
+    const transfers = [];
+    let i = 0, j = 0;
+    while (i < debtors.length && j < creditors.length) {
+      const pay = Math.min(debtors[i].amount, creditors[j].amount);
+      if (pay > 0.5) {
+        transfers.push({
+          from: debtors[i].name,
+          to: creditors[j].name,
+          amount: pay
         });
-
-        saveState();
-        document.getElementById('expAmount').value = '';
-        document.getElementById('expReason').value = '';
-        manualCategoryOverride = false;
-        currentDetectedCategory = 'Misc';
-        selectedSplitMemberIds = state.members.map(function (m) { return m.id; });
-        renderCategoryBadge();
-        window.renderAll();
-        showToast('✅ Saved ' + fmtMoney(amount) + ' (' + state.expenses[state.expenses.length - 1].category + ')');
-      };
-
-      window.deleteExpense = function (expId) {
-        state.expenses = state.expenses.filter(function (e) { return e.id !== expId; });
-        saveState();
-        window.renderAll();
-        showToast('🗑 Expense deleted');
-      };
-
-      // --- TAB 2: MEMBERS & FAMILY SHARES ---
-      window.selectNewMemberShare = function (weight) {
-        newMemberShareWeight = weight;
-        var btns = document.querySelectorAll('#newMemberShareSelector .share-btn');
-        for (var i = 0; i < btns.length; i++) {
-          var sh = parseInt(btns[i].getAttribute('data-share'), 10);
-          if (sh === weight) {
-            btns[i].classList.add('active');
-          } else {
-            btns[i].classList.remove('active');
-          }
-        }
-      };
-
-      function renderMembersTab(fin) {
-        document.getElementById('totalSharesBadge').textContent = fin.totalGroupShares + ' Total Shares';
-        var container = document.getElementById('membersListContainer');
-
-        var html = '';
-        for (var i = 0; i < state.members.length; i++) {
-          var m = state.members[i];
-          var st = fin.membersMap[m.id];
-          var pct = fin.totalGroupShares > 0 ? Math.round((m.shares / fin.totalGroupShares) * 100) : 0;
-
-          html += '<div class="item-row">' +
-            '<div style="min-width:0;flex:1;">' +
-              '<div style="display:flex;align-items:center;gap:6px;">' +
-                '<span class="item-title">' + escapeHtml(m.name) + '</span>' +
-                '<span class="mini-tag tag-member">' + m.shares + 'x (' + pct + '%)</span>' +
-              '</div>' +
-              '<div style="font-size:10px;color:var(--text-muted);margin-top:2px;">' +
-                'Paid: ' + fmtMoney(st.totalPaid) + ' • Trip Share: ' + fmtMoney(st.consumedShare) +
-              '</div>' +
-            '</div>' +
-            '<div style="display:flex;align-items:center;gap:5px;">' +
-              '<button type="button" class="share-btn" onclick="window.adjustMemberShare(\'' + m.id + '\', -1)">－</button>' +
-              '<span style="width:20px;text-align:center;font-weight:800;font-size:12.5px;">' + m.shares + '</span>' +
-              '<button type="button" class="share-btn" onclick="window.adjustMemberShare(\'' + m.id + '\', 1)">＋</button>' +
-              '<button type="button" class="action-icon-btn del" onclick="window.removeMember(\'' + m.id + '\')" title="Remove Member">🗑</button>' +
-            '</div>' +
-          '</div>';
-        }
-        container.innerHTML = html;
       }
-
-      window.handleAddMember = function (e) {
-        e.preventDefault();
-        var input = document.getElementById('newMemberName');
-        var name = input.value.trim();
-        if (!name) return;
-
-        var newId = 'm_' + Date.now();
-        state.members.push({ id: newId, name: name, shares: newMemberShareWeight });
-        selectedSplitMemberIds.push(newId);
-        input.value = '';
-        window.selectNewMemberShare(1);
-        saveState();
-        window.renderAll();
-        showToast('👤 Added ' + name + ' (' + newMemberShareWeight + 'x share)');
-      };
-
-      window.adjustMemberShare = function (memberId, delta) {
-        for (var i = 0; i < state.members.length; i++) {
-          if (state.members[i].id === memberId) {
-            var next = state.members[i].shares + delta;
-            if (next >= 1 && next <= 20) {
-              state.members[i].shares = next;
-              saveState();
-              window.renderAll();
-            }
-            break;
-          }
-        }
-      };
-
-      window.removeMember = function (memberId) {
-        if (state.members.length <= 1) {
-          showToast('⚠️ At least 1 member is required!');
-          return;
-        }
-        var usedExp = state.expenses.some(function (e) { return e.paidBy === memberId; });
-        var usedPool = state.poolContributions.some(function (p) { return p.memberId === memberId; });
-        if (usedExp || usedPool) {
-          showToast('⚠️ Delete their paid expenses/pool deposits first!');
-          return;
-        }
-        state.members = state.members.filter(function (m) { return m.id !== memberId; });
-        for (var i = 0; i < state.expenses.length; i++) {
-          state.expenses[i].splitMemberIds = (state.expenses[i].splitMemberIds || []).filter(function (id) { return id !== memberId; });
-        }
-        saveState();
-        window.renderAll();
-        showToast('🗑 Member removed');
-      };
-
-      // --- TAB 3: POOLED FUND ---
-      function renderPoolTab(fin) {
-        document.getElementById('poolTotalIn').textContent = fmtMoney(fin.totalPoolIn);
-        document.getElementById('poolTotalOut').textContent = fmtMoney(fin.totalPoolOut);
-
-        var balEl = document.getElementById('poolBalanceCard');
-        balEl.textContent = fmtMoney(fin.poolBalance);
-        balEl.style.color = fin.poolBalance >= 0 ? '#34d399' : '#fb7185';
-
-        var poolSelect = document.getElementById('poolMemberId');
-        var prev = poolSelect.value;
-        poolSelect.innerHTML = state.members.map(function (m) {
-          return '<option value="' + m.id + '">' + escapeHtml(m.name) + ' (' + m.shares + 'x share)</option>';
-        }).join('');
-        if (state.members.some(function (m) { return m.id === prev; })) {
-          poolSelect.value = prev;
-        }
-
-        document.getElementById('poolCountBadge').textContent = state.poolContributions.length;
-        var listEl = document.getElementById('poolHistoryList');
-        if (state.poolContributions.length === 0) {
-          listEl.innerHTML = '<div style="padding:24px 8px;text-align:center;color:var(--text-muted);font-size:12px;">No pool deposits recorded yet.</div>';
-          return;
-        }
-
-        var rev = state.poolContributions.slice().reverse();
-        listEl.innerHTML = rev.map(function (p) {
-          return buildPoolRowHtml(p);
-        }).join('');
-      }
-
-      function buildPoolRowHtml(p) {
-        var mName = 'Unknown';
-        for (var i = 0; i < state.members.length; i++) {
-          if (state.members[i].id === p.memberId) {
-            mName = state.members[i].name;
-            break;
-          }
-        }
-        return '<div class="item-row">' +
-          '<div class="item-left" onclick="window.openEditPoolModal(\'' + p.id + '\')">' +
-            '<div class="cat-icon-box cat-shop">🏦</div>' +
-            '<div>' +
-              '<div class="item-title">' + escapeHtml(mName) + '</div>' +
-              '<div class="item-sub">Paid to Pooled Fund • ' + fmtShortDate(p.date) + '</div>' +
-            '</div>' +
-          '</div>' +
-          '<div class="item-right">' +
-            '<span class="item-amount" style="color:var(--emerald);">+' + fmtMoney(p.amount) + '</span>' +
-            '<button type="button" class="action-icon-btn edit" onclick="window.openEditPoolModal(\'' + p.id + '\')" title="Edit">✎</button>' +
-            '<button type="button" class="action-icon-btn del" onclick="window.deletePoolContribution(\'' + p.id + '\')" title="Delete">🗑</button>' +
-          '</div>' +
-        '</div>';
-      }
-
-      window.handleAddPoolContribution = function (e) {
-        e.preventDefault();
-        var memberId = document.getElementById('poolMemberId').value;
-        var amount = parseFloat(document.getElementById('poolAmount').value);
-        var date = document.getElementById('poolDate').value || getTodayISO();
-        if (!memberId || !amount || amount <= 0) return;
-
-        state.poolContributions.push({
-          id: 'pool_' + Date.now(),
-          memberId: memberId,
-          amount: amount,
-          date: date
-        });
-        document.getElementById('poolAmount').value = '';
-        saveState();
-        window.renderAll();
-        showToast('🏦 Added ' + fmtMoney(amount) + ' to Pooled Fund');
-      };
-
-      window.deletePoolContribution = function (poolId) {
-        state.poolContributions = state.poolContributions.filter(function (p) { return p.id !== poolId; });
-        saveState();
-        window.renderAll();
-        showToast('🗑 Pool deposit removed');
-      };
-
-      // --- TAB 4: SETTLEMENTS ---
-      window.switchSettleSubView = function (view) {
-        var tView = document.getElementById('settleViewTransfers');
-        var bView = document.getElementById('settleViewBalances');
-        var btnT = document.getElementById('subTabBtnTransfers');
-        var btnB = document.getElementById('subTabBtnBalances');
-
-        if (view === 'transfers') {
-          tView.style.display = 'flex';
-          bView.style.display = 'none';
-          btnT.classList.add('active');
-          btnB.classList.remove('active');
-        } else {
-          tView.style.display = 'none';
-          bView.style.display = 'flex';
-          btnB.classList.add('active');
-          btnT.classList.remove('active');
-        }
-      };
-
-      function renderSettlementsTab(fin) {
-        document.getElementById('settleTotalSpend').textContent = fmtMoney(fin.totalTripExpense);
-        var remEl = document.getElementById('settlePoolRemaining');
-        remEl.textContent = fmtMoney(fin.poolBalance);
-        remEl.style.color = fin.poolBalance >= 0 ? 'var(--emerald)' : 'var(--rose)';
-
-        var transEl = document.getElementById('settlementTransfersList');
-        if (fin.settlements.length === 0) {
-          transEl.innerHTML = '<div style="padding:30px 10px;text-align:center;color:var(--emerald);font-weight:700;font-size:13px;">🎉 Everyone is settled up! No payments needed.</div>';
-        } else {
-          transEl.innerHTML = fin.settlements.map(function (s) {
-            var isPoolInvolved = s.fromIsPool || s.toIsPool;
-            var subLabel = s.fromIsPool
-              ? 'Refund from Remaining Pool Cash'
-              : (s.toIsPool ? 'Pay into Pool to cover deficit' : 'Direct Member Settlement');
-
-            return '<div style="padding:10px;border-radius:12px;border:1px solid ' + (isPoolInvolved ? 'var(--emerald-border)' : 'var(--border)') + ';background:' + (isPoolInvolved ? 'var(--emerald-soft)' : '#f8fafc') + ';display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;">' +
-              '<div style="min-width:0;">' +
-                '<span style="font-size:9.5px;font-weight:800;text-transform:uppercase;color:' + (isPoolInvolved ? 'var(--emerald)' : 'var(--primary)') + ';display:block;">' + subLabel + '</span>' +
-                '<div style="font-size:12.5px;font-weight:800;margin-top:2px;">' +
-                  '<span style="color:' + (s.fromIsPool ? 'var(--emerald)' : 'var(--rose)') + ';">' + escapeHtml(s.fromName) + '</span>' +
-                  ' <span style="color:var(--text-muted);">→</span> ' +
-                  '<span style="color:var(--emerald);">' + escapeHtml(s.toName) + '</span>' +
-                '</div>' +
-              '</div>' +
-              '<div style="background:#ffffff;padding:5px 10px;border-radius:9px;border:1px solid var(--border);font-weight:800;font-size:13px;flex-shrink:0;">' +
-                fmtMoney(s.amount) +
-              '</div>' +
-            '</div>';
-          }).join('');
-        }
-
-        var balEl = document.getElementById('memberBalancesList');
-        balEl.innerHTML = state.members.map(function (m) {
-          var st = fin.membersMap[m.id];
-          var isPos = st.netBalance >= 0.01;
-          var isNeg = st.netBalance <= -0.01;
-          var col = isPos ? 'var(--emerald)' : (isNeg ? 'var(--rose)' : 'var(--text-muted)');
-          var label = isPos ? ('Gets ' + fmtMoney(st.netBalance)) : (isNeg ? ('Owes ' + fmtMoney(Math.abs(st.netBalance))) : 'Settled');
-
-          return '<div class="item-row">' +
-            '<div>' +
-              '<div style="display:flex;align-items:center;gap:6px;">' +
-                '<span class="item-title">' + escapeHtml(m.name) + '</span>' +
-                '<span class="mini-tag tag-member">' + m.shares + 'x</span>' +
-              '</div>' +
-              '<div class="item-sub">Paid: <b>' + fmtMoney(st.totalPaid) + '</b> (Pool: ' + fmtMoney(st.poolPaid) + ', Direct: ' + fmtMoney(st.directPaid) + ')</div>' +
-            '</div>' +
-            '<div style="text-align:right;">' +
-              '<div style="font-weight:800;color:' + col + ';">' + label + '</div>' +
-              '<div style="font-size:10px;color:var(--text-muted);">Share: ' + fmtMoney(st.consumedShare) + '</div>' +
-            '</div>' +
-          '</div>';
-        }).join('');
-      }
-
-      window.copySettlementReport = function () {
-        var fin = calculateTripFinancials();
-        var lines = [
-          '🧾 *' + state.tripTitle + ' — Settlement Summary*',
-          'Total Trip Spend: ' + fmtMoney(fin.totalTripExpense),
-          'Pool Added: ' + fmtMoney(fin.totalPoolIn) + ' | Pool Spent: ' + fmtMoney(fin.totalPoolOut) + ' | Pool Left: ' + fmtMoney(fin.poolBalance),
-          '',
-          '👥 *Member Breakdown:*'
-        ];
-        for (var i = 0; i < state.members.length; i++) {
-          var m = state.members[i];
-          var st = fin.membersMap[m.id];
-          var net = st.netBalance >= 0 ? ('+' + fmtMoney(st.netBalance) + ' gets') : (fmtMoney(st.netBalance) + ' owes');
-          lines.push('• ' + m.name + ' (' + m.shares + 'x): Paid ' + fmtMoney(st.totalPaid) + ', Share ' + fmtMoney(st.consumedShare) + ' → ' + net);
-        }
-        lines.push('');
-        lines.push('🤝 *Who Pays Whom:*');
-        if (fin.settlements.length === 0) {
-          lines.push('✅ Everyone is settled!');
-        } else {
-          for (var j = 0; j < fin.settlements.length; j++) {
-            var s = fin.settlements[j];
-            lines.push('• *' + s.fromName + '* pays *' + s.toName + '*: *' + fmtMoney(s.amount) + '*');
-          }
-        }
-
-        var ta = document.createElement('textarea');
-        ta.value = lines.join('\n');
-        document.body.appendChild(ta);
-        ta.select();
-        try {
-          document.execCommand('copy');
-          showToast('📋 WhatsApp summary copied!');
-        } catch (e) {
-          showToast('⚠️ Copy failed');
-        }
-        document.body.removeChild(ta);
-      };
-
-      // --- TAB 5: CATEGORY GRAPH & LOGGED EXPENSE EDITOR ---
-      window.setCategoryFilter = function (catId) {
-        selectedCategoryFilter = (selectedCategoryFilter === catId) ? 'ALL' : catId;
-        window.renderAll();
-      };
-
-      function renderCategoriesTab(fin) {
-        var total = fin.totalTripExpense;
-        var totalsMap = {};
-        for (var i = 0; i < CATEGORY_RULES.length; i++) {
-          var rule = CATEGORY_RULES[i];
-          totalsMap[rule.id] = { amount: 0, count: 0, meta: rule };
-        }
-
-        for (var j = 0; j < state.expenses.length; j++) {
-          var exp = state.expenses[j];
-          var key = totalsMap[exp.category] ? exp.category : 'Misc';
-          totalsMap[key].amount += (Number(exp.amount) || 0);
-          totalsMap[key].count += 1;
-        }
-
-        document.getElementById('clearCategoryFilterBtn').style.display = (selectedCategoryFilter === 'ALL') ? 'none' : 'inline-block';
-
-        // Stacked Horizontal Bar
-        var barEl = document.getElementById('categoryStackedBar');
-        if (total <= 0) {
-          barEl.innerHTML = '<div style="width:100%;height:100%;background:#cbd5e1;border-radius:999px;"></div>';
-        } else {
-          barEl.innerHTML = CATEGORY_RULES.map(function (c) {
-            var amt = totalsMap[c.id].amount;
-            if (amt <= 0) return '';
-            var pct = Math.max(3, (amt / total) * 100);
-            var dim = (selectedCategoryFilter !== 'ALL' && selectedCategoryFilter !== c.id) ? '0.28' : '1';
-            return '<div onclick="window.setCategoryFilter(\'' + c.id + '\')" class="stacked-seg ' + c.barClass + '" style="width:' + pct + '%;opacity:' + dim + ';" title="' + c.id + ': ' + fmtMoney(amt) + '"></div>';
-          }).join('');
-        }
-
-        // 2-Column Category Breakdown Graph Cards
-        var sorted = Object.keys(totalsMap).map(function (k) { return totalsMap[k]; }).sort(function (a, b) {
-          return b.amount - a.amount;
-        });
-
-        var legendEl = document.getElementById('categoryGraphLegend');
-        legendEl.innerHTML = sorted.map(function (item) {
-          var c = item.meta;
-          var pct = total > 0 ? Math.round((item.amount / total) * 100) : 0;
-          var isAct = selectedCategoryFilter === c.id;
-          return '<button type="button" onclick="window.setCategoryFilter(\'' + c.id + '\')" class="cat-card ' + (isAct ? 'active' : '') + '">' +
-            '<div style="display:flex;align-items:center;justify-content:space-between;width:100%;">' +
-              '<span style="font-size:11px;font-weight:700;">' + c.emoji + ' ' + escapeHtml(c.shortName) + '</span>' +
-              '<span style="font-size:10px;font-weight:800;color:var(--text-sub);">' + pct + '%</span>' +
-            '</div>' +
-            '<div style="display:flex;align-items:baseline;justify-content:space-between;width:100%;">' +
-              '<span style="font-size:12px;font-weight:800;">' + fmtMoney(item.amount) + '</span>' +
-              '<span style="font-size:9.5px;color:var(--text-muted);">' + item.count + ' item' + (item.count === 1 ? '' : 's') + '</span>' +
-            '</div>' +
-            '<div class="cat-progress-track">' +
-              '<div class="' + c.barClass + '" style="height:100%;width:' + pct + '%;"></div>' +
-            '</div>' +
-          '</button>';
-        }).join('');
-
-        // Filtered Expenses List below Graph
-        var filtered = state.expenses.filter(function (e) {
-          return selectedCategoryFilter === 'ALL' || e.category === selectedCategoryFilter;
-        }).reverse();
-
-        document.getElementById('catFilteredTitle').textContent = (selectedCategoryFilter === 'ALL' ? 'All Logged Expenses' : selectedCategoryFilter) + ' (' + filtered.length + ')';
-
-        var listEl = document.getElementById('categoryExpensesList');
-        if (filtered.length === 0) {
-          listEl.innerHTML = '<div style="padding:24px 8px;text-align:center;color:var(--text-muted);font-size:12px;">No expenses in this category.</div>';
-        } else {
-          listEl.innerHTML = filtered.map(function (exp) { return buildExpenseRowHtml(exp); }).join('');
-        }
-      }
-
-      // --- TAB 6: MASTER EDITABLE LEDGER ---
-      window.switchLedgerSubView = function (view) {
-        currentLedgerSubView = view;
-        var bExp = document.getElementById('ledgerBtnExpenses');
-        var bPool = document.getElementById('ledgerBtnPool');
-        if (view === 'expenses') {
-          bExp.classList.add('active');
-          bPool.classList.remove('active');
-        } else {
-          bPool.classList.add('active');
-          bExp.classList.remove('active');
-        }
-        window.renderAll();
-      };
-
-      window.handleLedgerSearch = function (val) {
-        ledgerSearchQuery = String(val || '').trim();
-        window.renderAll();
-      };
-
-      function renderLedgerTab(fin) {
-        var poolSpent = fin.totalPoolOut;
-        var directSpent = Math.max(0, fin.totalTripExpense - fin.totalPoolOut);
-        var total = fin.totalTripExpense;
-
-        document.getElementById('ledgerPoolVsDirectLeft').textContent = 'Pool Spent: ' + fmtMoney(poolSpent);
-        document.getElementById('ledgerPoolVsDirectRight').textContent = 'Direct Paid: ' + fmtMoney(directSpent);
-
-        var poolPct = total > 0 ? Math.round((poolSpent / total) * 100) : 50;
-        document.getElementById('ledgerPoolBar').style.width = poolPct + '%';
-        document.getElementById('ledgerDirectBar').style.width = (100 - poolPct) + '%';
-
-        document.getElementById('ledgerExpCount').textContent = state.expenses.length;
-        document.getElementById('ledgerPoolCount').textContent = state.poolContributions.length;
-
-        var filterEl = document.getElementById('ledgerPayerFilter');
-        var prevF = filterEl.value || 'ALL';
-        var fOpts = '<option value="ALL">All Payers</option>';
-        if (currentLedgerSubView === 'expenses') {
-          fOpts += '<option value="POOL">Pooled Fund</option>';
-        }
-        for (var i = 0; i < state.members.length; i++) {
-          fOpts += '<option value="' + state.members[i].id + '">' + escapeHtml(state.members[i].name) + '</option>';
-        }
-        filterEl.innerHTML = fOpts;
-        if (prevF === 'ALL' || prevF === 'POOL' || state.members.some(function (m) { return m.id === prevF; })) {
-          filterEl.value = prevF;
-        } else {
-          filterEl.value = 'ALL';
-        }
-
-        var activePayer = filterEl.value;
-        var q = ledgerSearchQuery.toLowerCase();
-        var listEl = document.getElementById('masterLedgerList');
-        var titleEl = document.getElementById('ledgerListHeaderTitle');
-
-        if (currentLedgerSubView === 'expenses') {
-          var list = state.expenses.slice().reverse().filter(function (exp) {
-            if (activePayer !== 'ALL' && exp.paidBy !== activePayer) return false;
-            if (!q) return true;
-            var pName = exp.paidBy === 'POOL' ? 'pooled fund' : '';
-            for (var m = 0; m < state.members.length; m++) {
-              if (state.members[m].id === exp.paidBy) pName = state.members[m].name.toLowerCase();
-            }
-            return (exp.reason || '').toLowerCase().indexOf(q) !== -1 ||
-                   (exp.category || '').toLowerCase().indexOf(q) !== -1 ||
-                   pName.indexOf(q) !== -1 ||
-                   String(exp.amount).indexOf(q) !== -1;
-          });
-
-          titleEl.textContent = 'Editable Expenses (' + list.length + ')';
-          listEl.innerHTML = list.length === 0
-            ? '<div style="padding:24px 8px;text-align:center;color:var(--text-muted);font-size:12px;">No matching expenses found.</div>'
-            : list.map(function (e) { return buildExpenseRowHtml(e); }).join('');
-        } else {
-          var pList = state.poolContributions.slice().reverse().filter(function (p) {
-            if (activePayer !== 'ALL' && activePayer !== 'POOL' && p.memberId !== activePayer) return false;
-            if (!q) return true;
-            var mName = '';
-            for (var m = 0; m < state.members.length; m++) {
-              if (state.members[m].id === p.memberId) mName = state.members[m].name.toLowerCase();
-            }
-            return mName.indexOf(q) !== -1 || String(p.amount).indexOf(q) !== -1;
-          });
-
-          titleEl.textContent = 'Editable Pool Deposits (' + pList.length + ')';
-          listEl.innerHTML = pList.length === 0
-            ? '<div style="padding:24px 8px;text-align:center;color:var(--text-muted);font-size:12px;">No matching pool deposits found.</div>'
-            : pList.map(function (p) { return buildPoolRowHtml(p); }).join('');
-        }
-      }
-
-      // ================= MODALS: EDIT EXPENSE, EDIT POOL, SETTINGS, BACKUP =================
-      window.closeModal = function () {
-        document.getElementById('appModal').classList.remove('open');
-      };
-
-      window.openEditExpenseModal = function (expId) {
-        var exp = null;
-        for (var i = 0; i < state.expenses.length; i++) {
-          if (state.expenses[i].id === expId) {
-            exp = state.expenses[i];
-            break;
-          }
-        }
-        if (!exp) return;
-
-        editingSplitMemberIds = (exp.splitMemberIds || []).slice();
-
-        var paidOpts = '<option value="POOL" ' + (exp.paidBy === 'POOL' ? 'selected' : '') + '>🏦 Pooled Fund</option>';
-        for (var j = 0; j < state.members.length; j++) {
-          var m = state.members[j];
-          paidOpts += '<option value="' + m.id + '" ' + (exp.paidBy === m.id ? 'selected' : '') + '>👤 ' + escapeHtml(m.name) + ' (' + m.shares + 'x)</option>';
-        }
-
-        var catOpts = CATEGORY_RULES.map(function (c) {
-          return '<option value="' + c.id + '" ' + (exp.category === c.id ? 'selected' : '') + '>' + c.emoji + ' ' + c.id + '</option>';
-        }).join('');
-
-        var content = document.getElementById('modalContent');
-        content.innerHTML =
-          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">' +
-            '<h3 style="font-size:14px;font-weight:800;">✎ Edit Logged Expense</h3>' +
-            '<button type="button" onclick="window.closeModal()" style="font-size:16px;color:var(--text-muted);">✕</button>' +
-          '</div>' +
-          '<form onsubmit="window.saveEditedExpense(event, \'' + exp.id + '\')" style="display:flex;flex-direction:column;gap:8px;">' +
-            '<div>' +
-              '<label class="field-label">Paid By</label>' +
-              '<select id="editExpPaidBy" class="select-box">' + paidOpts + '</select>' +
-            '</div>' +
-            '<div class="row-grid-2">' +
-              '<div>' +
-                '<label class="field-label">Amount (' + escapeHtml(state.currency) + ')</label>' +
-                '<input id="editExpAmount" type="number" step="0.01" min="0.01" required value="' + exp.amount + '" class="input-box" />' +
-              '</div>' +
-              '<div>' +
-                '<label class="field-label">Date</label>' +
-                '<input id="editExpDate" type="date" required value="' + exp.date + '" class="input-box" />' +
-              '</div>' +
-            '</div>' +
-            '<div>' +
-              '<label class="field-label">Reason</label>' +
-              '<input id="editExpReason" type="text" required value="' + escapeHtml(exp.reason) + '" class="input-box" />' +
-            '</div>' +
-            '<div>' +
-              '<label class="field-label">Category</label>' +
-              '<select id="editExpCategory" class="select-box">' + catOpts + '</select>' +
-            '</div>' +
-            '<div>' +
-              '<div class="field-label-row">' +
-                '<label class="field-label">Split Among Members</label>' +
-                '<button type="button" onclick="window.toggleAllEditSplitMembers()" style="font-size:10px;font-weight:700;color:var(--primary);">Toggle All</button>' +
-              '</div>' +
-              '<div id="editSplitMembersBox" class="chips-wrap" style="max-height:95px;padding:4px;background:#f8fafc;border:1px solid var(--border);border-radius:10px;"></div>' +
-            '</div>' +
-            '<div style="display:flex;gap:8px;margin-top:4px;">' +
-              '<button type="button" onclick="window.closeModal()" class="input-box" style="text-align:center;flex:1;">Cancel</button>' +
-              '<button type="submit" class="btn-primary" style="flex:1;">Save Changes</button>' +
-            '</div>' +
-          '</form>';
-
-        renderEditModalSplitChips();
-        document.getElementById('appModal').classList.add('open');
-      };
-
-      function renderEditModalSplitChips() {
-        var box = document.getElementById('editSplitMembersBox');
-        if (!box) return;
-        box.innerHTML = state.members.map(function (m) {
-          var isSel = editingSplitMemberIds.indexOf(m.id) !== -1;
-          return '<button type="button" onclick="window.toggleEditSplitMember(\'' + m.id + '\')" class="split-chip ' + (isSel ? 'selected' : '') + '">' +
-            '<span>' + (isSel ? '✓ ' : '+ ') + escapeHtml(m.name) + ' (' + m.shares + 'x)</span>' +
-          '</button>';
-        }).join('');
-      }
-
-      window.toggleEditSplitMember = function (memberId) {
-        var idx = editingSplitMemberIds.indexOf(memberId);
-        if (idx !== -1) {
-          editingSplitMemberIds.splice(idx, 1);
-        } else {
-          editingSplitMemberIds.push(memberId);
-        }
-        renderEditModalSplitChips();
-      };
-
-      window.toggleAllEditSplitMembers = function () {
-        if (editingSplitMemberIds.length === state.members.length) {
-          editingSplitMemberIds = [];
-        } else {
-          editingSplitMemberIds = state.members.map(function (m) { return m.id; });
-        }
-        renderEditModalSplitChips();
-      };
-
-      window.saveEditedExpense = function (e, expId) {
-        e.preventDefault();
-        if (editingSplitMemberIds.length === 0) {
-          showToast('⚠️ Select at least 1 member for split!');
-          return;
-        }
-        for (var i = 0; i < state.expenses.length; i++) {
-          if (state.expenses[i].id === expId) {
-            state.expenses[i].paidBy = document.getElementById('editExpPaidBy').value;
-            state.expenses[i].amount = parseFloat(document.getElementById('editExpAmount').value) || 0;
-            state.expenses[i].date = document.getElementById('editExpDate').value || getTodayISO();
-            state.expenses[i].reason = document.getElementById('editExpReason').value.trim();
-            state.expenses[i].category = document.getElementById('editExpCategory').value;
-            state.expenses[i].splitMemberIds = editingSplitMemberIds.slice();
-            break;
-          }
-        }
-        saveState();
-        window.closeModal();
-        window.renderAll();
-        showToast('✅ Expense updated!');
-      };
-
-      window.openEditPoolModal = function (poolId) {
-        var p = null;
-        for (var i = 0; i < state.poolContributions.length; i++) {
-          if (state.poolContributions[i].id === poolId) {
-            p = state.poolContributions[i];
-            break;
-          }
-        }
-        if (!p) return;
-
-        var mOpts = state.members.map(function (m) {
-          return '<option value="' + m.id + '" ' + (p.memberId === m.id ? 'selected' : '') + '>' + escapeHtml(m.name) + ' (' + m.shares + 'x)</option>';
-        }).join('');
-
-        var content = document.getElementById('modalContent');
-        content.innerHTML =
-          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">' +
-            '<h3 style="font-size:14px;font-weight:800;">✎ Edit Pool Deposit</h3>' +
-            '<button type="button" onclick="window.closeModal()" style="font-size:16px;color:var(--text-muted);">✕</button>' +
-          '</div>' +
-          '<form onsubmit="window.saveEditedPool(event, \'' + p.id + '\')" style="display:flex;flex-direction:column;gap:8px;">' +
-            '<div>' +
-              '<label class="field-label">Member</label>' +
-              '<select id="editPoolMemberId" class="select-box">' + mOpts + '</select>' +
-            '</div>' +
-            '<div class="row-grid-2">' +
-              '<div>' +
-                '<label class="field-label">Amount (' + escapeHtml(state.currency) + ')</label>' +
-                '<input id="editPoolAmount" type="number" step="0.01" min="0.01" required value="' + p.amount + '" class="input-box" />' +
-              '</div>' +
-              '<div>' +
-                '<label class="field-label">Date</label>' +
-                '<input id="editPoolDate" type="date" required value="' + p.date + '" class="input-box" />' +
-              '</div>' +
-            '</div>' +
-            '<div style="display:flex;gap:8px;margin-top:4px;">' +
-              '<button type="button" onclick="window.closeModal()" class="input-box" style="text-align:center;flex:1;">Cancel</button>' +
-              '<button type="submit" class="btn-primary btn-emerald" style="flex:1;">Update Deposit</button>' +
-            '</div>' +
-          '</form>';
-
-        document.getElementById('appModal').classList.add('open');
-      };
-
-      window.saveEditedPool = function (e, poolId) {
-        e.preventDefault();
-        for (var i = 0; i < state.poolContributions.length; i++) {
-          if (state.poolContributions[i].id === poolId) {
-            state.poolContributions[i].memberId = document.getElementById('editPoolMemberId').value;
-            state.poolContributions[i].amount = parseFloat(document.getElementById('editPoolAmount').value) || 0;
-            state.poolContributions[i].date = document.getElementById('editPoolDate').value || getTodayISO();
-            break;
-          }
-        }
-        saveState();
-        window.closeModal();
-        window.renderAll();
-        showToast('✅ Pool deposit updated!');
-      };
-
-      window.openTripSettingsModal = function () {
-        var content = document.getElementById('modalContent');
-        content.innerHTML =
-          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">' +
-            '<h3 style="font-size:14px;font-weight:800;">⚙️ Trip Name &amp; Currency</h3>' +
-            '<button type="button" onclick="window.closeModal()" style="font-size:16px;color:var(--text-muted);">✕</button>' +
-          '</div>' +
-          '<form onsubmit="window.saveTripSettings(event)" style="display:flex;flex-direction:column;gap:8px;">' +
-            '<div>' +
-              '<label class="field-label">Trip Name</label>' +
-              '<input id="modalTripName" type="text" required value="' + escapeHtml(state.tripTitle) + '" class="input-box" />' +
-            '</div>' +
-            '<div>' +
-              '<label class="field-label">Currency Symbol (₹, $, €, £)</label>' +
-              '<input id="modalCurrencyInput" type="text" required maxlength="4" value="' + escapeHtml(state.currency) + '" class="input-box" />' +
-            '</div>' +
-            '<div style="display:flex;gap:8px;margin-top:4px;">' +
-              '<button type="button" onclick="window.closeModal()" class="input-box" style="text-align:center;flex:1;">Cancel</button>' +
-              '<button type="submit" class="btn-primary" style="flex:1;">Save</button>' +
-            '</div>' +
-          '</form>';
-        document.getElementById('appModal').classList.add('open');
-      };
-
-      window.saveTripSettings = function (e) {
-        e.preventDefault();
-        state.tripTitle = document.getElementById('modalTripName').value.trim() || 'Trip Expenses';
-        state.currency = document.getElementById('modalCurrencyInput').value.trim() || '₹';
-        saveState();
-        window.closeModal();
-        window.renderAll();
-        showToast('✅ Settings updated');
-      };
-
-      window.openBackupModal = function () {
-        var jsonStr = JSON.stringify(state);
-        var content = document.getElementById('modalContent');
-        content.innerHTML =
-          '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">' +
-            '<h3 style="font-size:14px;font-weight:800;">💾 Data Backup &amp; Reset</h3>' +
-            '<button type="button" onclick="window.closeModal()" style="font-size:16px;color:var(--text-muted);">✕</button>' +
-          '</div>' +
-          '<p style="font-size:11px;color:var(--text-sub);margin-bottom:8px;">Copy or paste JSON below to share trip data across phones, or reset the app:</p>' +
-          '<textarea id="backupJsonBox" rows="4" class="input-box" style="font-size:10.5px;font-family:monospace;margin-bottom:8px;">' + escapeHtml(jsonStr) + '</textarea>' +
-          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">' +
-            '<button type="button" onclick="window.copyBackupJson()" class="btn-primary" style="font-size:11.5px;padding:7px;">📋 Copy Backup</button>' +
-            '<button type="button" onclick="window.importBackupJson()" class="btn-primary btn-emerald" style="font-size:11.5px;padding:7px;">📥 Load JSON</button>' +
-          '</div>' +
-          '<div style="border-top:1px solid var(--border);padding-top:8px;display:flex;gap:6px;">' +
-            '<button type="button" onclick="window.resetToSample()" class="input-box" style="flex:1;font-size:11px;text-align:center;">🔄 Demo Data</button>' +
-            '<button type="button" onclick="window.clearAllTripData()" class="input-box" style="flex:1;font-size:11px;text-align:center;color:var(--rose);border-color:var(--rose-border);">🗑 Start Fresh</button>' +
-          '</div>';
-        document.getElementById('appModal').classList.add('open');
-      };
-
-      window.copyBackupJson = function () {
-        var box = document.getElementById('backupJsonBox');
-        if (!box) return;
-        box.select();
-        try {
-          document.execCommand('copy');
-          showToast('📋 Backup JSON copied!');
-        } catch (e) {
-          showToast('⚠️ Copy manually from box');
-        }
-      };
-
-      window.importBackupJson = function () {
-        var box = document.getElementById('backupJsonBox');
-        if (!box) return;
-        try {
-          var parsed = JSON.parse(box.value);
-          if (parsed && Array.isArray(parsed.members) && Array.isArray(parsed.expenses)) {
-            state = parsed;
-            selectedSplitMemberIds = state.members.map(function (m) { return m.id; });
-            saveState();
-            window.closeModal();
-            window.renderAll();
-            showToast('✅ Trip data imported!');
-          } else {
-            showToast('⚠️ Invalid JSON structure');
-          }
-        } catch (err) {
-          showToast('⚠️ Invalid JSON format');
-        }
-      };
-
-      window.resetToSample = function () {
-        state = getSampleState();
-        selectedSplitMemberIds = state.members.map(function (m) { return m.id; });
-        saveState();
-        window.closeModal();
-        window.renderAll();
-        showToast('🔄 Demo trip data restored');
-      };
-
-      window.clearAllTripData = function () {
-        state.expenses = [];
-        state.poolContributions = [];
-        saveState();
-        window.closeModal();
-        window.renderAll();
-        showToast('✨ Cleared expenses & pool logs');
-      };
-
-      // ================= INITIALIZATION =================
-      function initApp() {
-        loadState();
-        var today = getTodayISO();
-        var expDateEl = document.getElementById('expDate');
-        var poolDateEl = document.getElementById('poolDate');
-        if (expDateEl) expDateEl.value = today;
-        if (poolDateEl) poolDateEl.value = today;
-
-        // Also bind delegated listener on bottom nav bar for extra reliability
-        var navBar = document.getElementById('bottomNavBar');
-        if (navBar) {
-          navBar.addEventListener('click', function (ev) {
-            var btn = ev.target.closest('[data-tab]');
-            if (btn) {
-              var tabId = btn.getAttribute('data-tab');
-              if (tabId) window.switchTab(tabId);
-            }
-          });
-        }
-
-        renderCategoryBadge();
-        window.renderAll();
-      }
-
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initApp);
+      debtors[i].amount -= pay;
+      creditors[j].amount -= pay;
+      if (debtors[i].amount < 0.5) i++;
+      if (creditors[j].amount < 0.5) j++;
+    }
+
+    return { stats: Object.values(stats), transfers, pool };
+  }
+
+  function copySettlementSummary() {
+    const { stats, transfers, pool } = computeSettlements();
+    const totalSpent = state.expenses.reduce((s, e) => s + Number(e.amount || 0), 0);
+    let lines = [
+      `🌴 *TripSplit Settlement Summary*`,
+      `Total Trip Spend: ₹${totalSpent.toFixed(0)}`,
+      `Pool Cash Left: ₹${pool.balance.toFixed(0)}`,
+      ``,
+      `*Who Pays Whom:*`
+    ];
+    if (transfers.length === 0) {
+      lines.push(`✅ All settled up!`);
+    } else {
+      transfers.forEach(t => {
+        lines.push(`• *${t.from}* ➡️ *${t.to}*: ₹${t.amount.toFixed(0)}`);
+      });
+    }
+    lines.push(``, `*Member Breakdown (Paid - Share = Net):*`);
+    stats.forEach(st => {
+      const sign = st.net >= 0 ? "+" : "";
+      lines.push(`• ${st.name} (${st.shares}x): Paid ₹${st.totalContributed.toFixed(0)} | Share ₹${st.fairShare.toFixed(0)} | Net: ${sign}₹${st.net.toFixed(0)}`);
+    });
+    navigator.clipboard.writeText(lines.join("\n")).then(() => {
+      showToast("Copied WhatsApp summary!");
+    });
+  }
+
+  // Edit Expense Modal
+  function openEditExpense(id) {
+    const exp = state.expenses.find(e => e.id === id);
+    if (!exp) return;
+    document.getElementById("editExpId").value = exp.id;
+
+    const payerSel = document.getElementById("editExpPayer");
+    payerSel.innerHTML = `<option value="POOL">🏦 Pooled Fund</option>` +
+      state.members.map(m => `<option value="${m.id}">${escapeHtml(m.name)}</option>`).join("");
+    payerSel.value = exp.payer;
+
+    document.getElementById("editExpAmount").value = exp.amount;
+    document.getElementById("editExpDate").value = exp.date;
+    document.getElementById("editExpReason").value = exp.reason;
+
+    const catSel = document.getElementById("editExpCat");
+    catSel.innerHTML = CATEGORIES.map(c => `<option value="${c.name}">${c.icon} ${c.name}</option>`).join("");
+    catSel.value = exp.category;
+
+    editSelectedSplitIds = new Set(exp.splitMembers || []);
+    renderEditSplitChips();
+    document.getElementById("editExpenseModal").classList.add("open");
+  }
+
+  function renderEditSplitChips() {
+    const wrap = document.getElementById("editExpSplitChips");
+    wrap.innerHTML = state.members.map(m => {
+      const sel = editSelectedSplitIds.has(m.id) ? "selected" : "";
+      return `<div class="member-chip ${sel}" onclick="toggleEditSplitMember('${m.id}')">
+        <span>${escapeHtml(m.name)}</span>
+        <span class="chip-weight">${m.shares}x</span>
+      </div>`;
+    }).join("");
+  }
+
+  function toggleEditSplitMember(id) {
+    if (editSelectedSplitIds.has(id)) editSelectedSplitIds.delete(id);
+    else editSelectedSplitIds.add(id);
+    renderEditSplitChips();
+  }
+
+  function closeEditModal() {
+    document.getElementById("editExpenseModal").classList.remove("open");
+  }
+
+  function saveEditedExpense() {
+    const id = document.getElementById("editExpId").value;
+    const exp = state.expenses.find(e => e.id === id);
+    if (!exp) return;
+    const amt = parseFloat(document.getElementById("editExpAmount").value);
+    if (!amt || amt <= 0) return showToast("Invalid amount");
+    if (editSelectedSplitIds.size === 0) return showToast("Select at least 1 member");
+
+    exp.payer = document.getElementById("editExpPayer").value;
+    exp.amount = amt;
+    exp.date = document.getElementById("editExpDate").value;
+    exp.reason = document.getElementById("editExpReason").value.trim() || "Expense";
+    exp.category = document.getElementById("editExpCat").value;
+    exp.splitMembers = Array.from(editSelectedSplitIds);
+
+    saveLocalState();
+    closeEditModal();
+    renderAll();
+    showToast("Expense updated!");
+    syncActionToCloud({ action: "upsert", type: "expense", item: exp });
+  }
+
+  function deleteEditedExpense() {
+    const id = document.getElementById("editExpId").value;
+    state.expenses = state.expenses.filter(e => e.id !== id);
+    saveLocalState();
+    closeEditModal();
+    renderAll();
+    showToast("Expense deleted");
+    syncActionToCloud({ action: "delete", type: "expense", id });
+  }
+
+  function setCatFilter(catName) {
+    activeCategoryFilter = catName;
+    renderAll();
+  }
+
+  // Render UI
+  function renderAll() {
+    const pool = getPoolMetrics();
+    const totalSpent = state.expenses.reduce((s, e) => s + Number(e.amount || 0), 0);
+    const totalShares = state.members.reduce((s, m) => s + Number(m.shares || 0), 0);
+
+    document.getElementById("kpiTotalSpent").textContent = `₹${totalSpent.toLocaleString("en-IN")}`;
+    document.getElementById("kpiPoolLeft").textContent = `₹${pool.balance.toLocaleString("en-IN")}`;
+    document.getElementById("kpiTotalShares").textContent = `${totalShares} Shares`;
+
+    // Populate Payer dropdown in Tab 1
+    const expPayer = document.getElementById("expPayer");
+    const prevPayer = expPayer.value;
+    expPayer.innerHTML = `<option value="POOL">🏦 Pooled Fund (₹${pool.balance.toFixed(0)} left)</option>` +
+      state.members.map(m => `<option value="${m.id}">👤 ${escapeHtml(m.name)} (${m.shares}x)</option>`).join("");
+    if (prevPayer && (prevPayer === "POOL" || state.members.some(m => m.id === prevPayer))) {
+      expPayer.value = prevPayer;
+    }
+
+    // Populate Deposit Member dropdown in Tab 3
+    const depMem = document.getElementById("depMember");
+    const prevDep = depMem.value;
+    depMem.innerHTML = state.members.map(m => `<option value="${m.id}">${escapeHtml(m.name)} (${m.shares}x)</option>`).join("");
+    if (prevDep && state.members.some(m => m.id === prevDep)) depMem.value = prevDep;
+
+    renderSplitChips();
+    updateSharePreview();
+
+    // Recent Expenses in Tab 1
+    const recentEl = document.getElementById("recentExpensesList");
+    if (state.expenses.length === 0) {
+      recentEl.innerHTML = `<div style="font-size:12px;color:var(--muted);text-align:center;padding:8px;">No expenses logged yet.</div>`;
+    } else {
+      recentEl.innerHTML = state.expenses.slice(0, 4).map(e => renderExpenseRow(e)).join("");
+    }
+
+    // Tab 2: Members List
+    document.getElementById("membersTotalBadge").textContent = `${state.members.length} units • ${totalShares} shares`;
+    document.getElementById("membersList").innerHTML = state.members.map(m => {
+      const pct = totalShares > 0 ? ((m.shares / totalShares) * 100).toFixed(1) : 0;
+      return `<div class="list-item">
+        <div class="item-main">
+          <div class="item-title">${escapeHtml(m.name)}</div>
+          <div class="item-sub">${pct}% of trip share weight</div>
+        </div>
+        <div class="share-stepper">
+          <button type="button" class="step-btn" onclick="changeMemberShares('${m.id}', -1)">−</button>
+          <span style="font-size:12px;font-weight:700;min-width:24px;text-align:center;">${m.shares}x</span>
+          <button type="button" class="step-btn" onclick="changeMemberShares('${m.id}', 1)">+</button>
+        </div>
+        <button type="button" class="icon-btn" onclick="removeMember('${m.id}')" title="Remove">🗑️</button>
+      </div>`;
+    }).join("");
+
+    // Tab 3: Pool Status & History
+    document.getElementById("poolTotalIn").textContent = `₹${pool.totalIn.toLocaleString("en-IN")}`;
+    document.getElementById("poolTotalOut").textContent = `₹${pool.poolSpent.toLocaleString("en-IN")}`;
+    document.getElementById("poolBalance").textContent = `₹${pool.balance.toLocaleString("en-IN")}`;
+
+    const depList = document.getElementById("depositsList");
+    depList.innerHTML = state.deposits.length === 0
+      ? `<div style="font-size:12px;color:var(--muted);text-align:center;padding:8px;">No pool deposits yet.</div>`
+      : state.deposits.map(d => `<div class="list-item">
+          <div class="item-main">
+            <div class="item-title">${escapeHtml(getMemberName(d.memberName))}</div>
+            <div class="item-sub">${escapeHtml(d.date)} ${d.note ? "• " + escapeHtml(d.note) : ""}</div>
+          </div>
+          <div class="item-right">
+            <div class="item-amt" style="color:var(--emerald);">+₹${Number(d.amount).toLocaleString("en-IN")}</div>
+          </div>
+          <button type="button" class="icon-btn" onclick="deleteDeposit('${d.id}')">🗑️</button>
+        </div>`).join("");
+
+    // Tab 4: Settlements
+    const { stats, transfers } = computeSettlements();
+    const transEl = document.getElementById("settlementTransfersList");
+    transEl.innerHTML = transfers.length === 0
+      ? `<div style="padding:10px;text-align:center;color:var(--emerald);font-weight:700;font-size:13px;">✅ Everyone is settled!</div>`
+      : transfers.map(t => `<div class="list-item">
+          <div class="item-main">
+            <div class="item-title">${escapeHtml(t.from)} ➡️ ${escapeHtml(t.to)}</div>
+            <div class="item-sub">Recommended settlement transfer</div>
+          </div>
+          <div class="item-right">
+            <div class="item-amt" style="color:var(--primary);">₹${t.amount.toFixed(0)}</div>
+          </div>
+        </div>`).join("");
+
+    document.getElementById("memberNetTable").innerHTML = stats.map(st => {
+      const color = st.net >= 0 ? "var(--emerald)" : "var(--rose)";
+      const label = st.net >= 0 ? `Gets back ₹${st.net.toFixed(0)}` : `Owes ₹${(-st.net).toFixed(0)}`;
+      return `<div class="list-item">
+        <div class="item-main">
+          <div class="item-title">${escapeHtml(st.name)} <span style="font-size:11px;color:var(--muted);">(${st.shares}x shares)</span></div>
+          <div class="item-sub">Direct: ₹${st.directPaid.toFixed(0)} • Pool In: ₹${st.poolDeposited.toFixed(0)} • Trip Share: ₹${st.fairShare.toFixed(0)}</div>
+        </div>
+        <div class="item-right">
+          <div class="item-amt" style="color:${color};">${label}</div>
+        </div>
+      </div>`;
+    }).join("");
+
+    // Tab 5: Category Graph + Expense List
+    renderCategoryGraph(totalSpent);
+
+    // Tab 6: Master Ledger
+    renderMasterLedger();
+  }
+
+  function renderExpenseRow(e) {
+    const catObj = CATEGORIES.find(c => c.name === e.category) || CATEGORIES[0];
+    return `<div class="list-item" onclick="openEditExpense('${e.id}')" style="cursor:pointer;">
+      <div class="item-main">
+        <div class="item-title">${catObj.icon} ${escapeHtml(e.reason)}</div>
+        <div class="item-sub">${escapeHtml(e.date)} • Paid by ${escapeHtml(getMemberName(e.payer))}</div>
+      </div>
+      <div class="item-right">
+        <div class="item-amt">₹${Number(e.amount).toLocaleString("en-IN")}</div>
+        <div class="item-sub">✏️ Edit</div>
+      </div>
+    </div>`;
+  }
+
+  function renderCategoryGraph(totalSpent) {
+    const totals = {};
+    CATEGORIES.forEach(c => totals[c.name] = { sum: 0, count: 0, meta: c });
+    state.expenses.forEach(e => {
+      const cName = totals[e.category] ? e.category : CATEGORIES[0].name;
+      totals[cName].sum += Number(e.amount || 0);
+      totals[cName].count += 1;
+    });
+
+    const barEl = document.getElementById("catStackedBar");
+    if (totalSpent <= 0) {
+      barEl.innerHTML = `<div style="width:100%;background:#334155;"></div>`;
+    } else {
+      barEl.innerHTML = CATEGORIES.map(c => {
+        const pct = (totals[c.name].sum / totalSpent) * 100;
+        if (pct <= 0) return "";
+        return `<div style="width:${pct}%;background:${c.color};height:100%;" title="${c.name}: ₹${totals[c.name].sum}"></div>`;
+      }).join("");
+    }
+
+    document.getElementById("catBreakdownGrid").innerHTML = CATEGORIES.map(c => {
+      const info = totals[c.name];
+      const pct = totalSpent > 0 ? ((info.sum / totalSpent) * 100).toFixed(0) : 0;
+      const activeCls = activeCategoryFilter === c.name ? "active-filter" : "";
+      return `<div class="cat-card ${activeCls}" onclick="setCatFilter('${c.name}')">
+        <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:700;">
+          <span>${c.icon} ${c.name.split(" ")[0]}</span>
+          <span style="color:${c.color};">${pct}%</span>
+        </div>
+        <div style="font-size:13px;font-weight:700;margin-top:3px;">₹${info.sum.toLocaleString("en-IN")}</div>
+        <div style="font-size:10px;color:var(--muted);">${info.count} items</div>
+      </div>`;
+    }).join("");
+
+    const filtered = activeCategoryFilter === "ALL"
+      ? state.expenses
+      : state.expenses.filter(e => e.category === activeCategoryFilter);
+
+    document.getElementById("catFilteredTitle").textContent =
+      activeCategoryFilter === "ALL" ? "All Logged Expenses (Tap to Edit)" : `${activeCategoryFilter} (${filtered.length} items)`;
+
+    document.getElementById("graphExpensesList").innerHTML = filtered.length === 0
+      ? `<div style="font-size:12px;color:var(--muted);text-align:center;padding:8px;">No expenses in this category.</div>`
+      : filtered.map(e => renderExpenseRow(e)).join("");
+  }
+
+  function renderMasterLedger() {
+    const q = (document.getElementById("ledgerSearch").value || "").toLowerCase();
+    const mode = document.getElementById("ledgerType").value;
+    const container = document.getElementById("masterLedgerList");
+
+    if (mode === "expenses") {
+      const list = state.expenses.filter(e =>
+        e.reason.toLowerCase().includes(q) ||
+        getMemberName(e.payer).toLowerCase().includes(q) ||
+        e.category.toLowerCase().includes(q)
+      );
+      container.innerHTML = list.length === 0
+        ? `<div style="font-size:12px;color:var(--muted);text-align:center;padding:8px;">No matching expenses.</div>`
+        : list.map(e => renderExpenseRow(e)).join("");
+    } else {
+      const list = state.deposits.filter(d =>
+        getMemberName(d.memberName).toLowerCase().includes(q) ||
+        (d.note || "").toLowerCase().includes(q)
+      );
+      container.innerHTML = list.length === 0
+        ? `<div style="font-size:12px;color:var(--muted);text-align:center;padding:8px;">No matching pool deposits.</div>`
+        : list.map(d => `<div class="list-item">
+            <div class="item-main">
+              <div class="item-title">${escapeHtml(getMemberName(d.memberName))}</div>
+              <div class="item-sub">${escapeHtml(d.date)} ${d.note ? "• " + escapeHtml(d.note) : ""}</div>
+            </div>
+            <div class="item-right">
+              <div class="item-amt" style="color:var(--emerald);">+₹${Number(d.amount).toLocaleString("en-IN")}</div>
+            </div>
+            <button type="button" class="icon-btn" onclick="deleteDeposit('${d.id}')">🗑️</button>
+          </div>`).join("");
+    }
+  }
+
+  // Cloud Sync Logic (Google Apps Script)
+  function updateSyncStatusUI(status, text) {
+    const dot = document.getElementById("syncDot");
+    const label = document.getElementById("syncLabel");
+    dot.className = "sync-dot " + (status === "online" ? "online" : (status === "error" ? "error" : ""));
+    label.textContent = text;
+  }
+
+  function openSyncModal() {
+    document.getElementById("scriptUrlInput").value = getScriptUrl();
+    document.getElementById("syncModal").classList.add("open");
+  }
+
+  function closeSyncModal() {
+    document.getElementById("syncModal").classList.remove("open");
+  }
+
+  function saveScriptUrl() {
+    const val = document.getElementById("scriptUrlInput").value.trim();
+    SafeStore.set("trip_script_url", val);
+    closeSyncModal();
+    if (val) syncFromCloud(true);
+    else updateSyncStatusUI("local", "Offline Mode");
+  }
+
+  function copyShareableGroupLink() {
+    const url = document.getElementById("scriptUrlInput").value.trim() || getScriptUrl();
+    if (!url) return showToast("Paste your Apps Script URL first");
+    const base = window.location.origin + window.location.pathname;
+    const fullLink = `${base}?api=${encodeURIComponent(url)}`;
+    navigator.clipboard.writeText(fullLink).then(() => {
+      showToast("Shareable group link copied!");
+    });
+  }
+
+  async function syncFromCloud(showNotification) {
+    const url = getScriptUrl();
+    if (!url) {
+      updateSyncStatusUI("local", "Local Mode");
+      if (showNotification) openSyncModal();
+      return;
+    }
+    updateSyncStatusUI("syncing", "Syncing...");
+    try {
+      const res = await fetch(url + "?t=" + Date.now());
+      const data = await res.json();
+      if (data.status === "success") {
+        if (Array.isArray(data.members) && data.members.length > 0) state.members = data.members;
+        if (Array.isArray(data.expenses)) state.expenses = data.expenses;
+        if (Array.isArray(data.deposits)) state.deposits = data.deposits;
+        selectedSplitIds = new Set(state.members.map(m => m.id));
+        saveLocalState();
+        renderAll();
+        updateSyncStatusUI("online", "Live Synced");
+        if (showNotification) showToast("Synced with Google Sheets!");
       } else {
-        initApp();
+        updateSyncStatusUI("error", "Sync Error");
       }
-    })();
-  </script>
+    } catch (err) {
+      updateSyncStatusUI("error", "Offline Cache");
+      if (showNotification) showToast("Could not reach Sheet");
+    }
+  }
+
+  async function syncActionToCloud(payload) {
+    const url = getScriptUrl();
+    if (!url) return;
+    updateSyncStatusUI("syncing", "Saving...");
+    try {
+      // Using text/plain avoids CORS OPTIONS preflight rejection in Google Apps Script
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.status === "success") {
+        updateSyncStatusUI("online", "Live Synced");
+      } else {
+        updateSyncStatusUI("error", "Sync Error");
+      }
+    } catch (e) {
+      updateSyncStatusUI("error", "Saved Locally");
+    }
+  }
+
+  async function pushAllToCloud() {
+    const url = document.getElementById("scriptUrlInput").value.trim() || getScriptUrl();
+    if (!url) return showToast("Paste your Apps Script URL first");
+    SafeStore.set("trip_script_url", url);
+    closeSyncModal();
+    await syncActionToCloud({
+      action: "syncAll",
+      members: state.members,
+      expenses: state.expenses,
+      deposits: state.deposits
+    });
+    showToast("All local data pushed to Sheet!");
+  }
+
+  function exportJsonBackup() {
+    const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `tripsplit_backup_${todayStr()}.json`;
+    a.click();
+  }
+
+  function importJsonBackup(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        const parsed = JSON.parse(e.target.result);
+        if (parsed.members && parsed.expenses && parsed.deposits) {
+          state = parsed;
+          selectedSplitIds = new Set(state.members.map(m => m.id));
+          saveLocalState();
+          renderAll();
+          closeSyncModal();
+          showToast("Backup restored!");
+        }
+      } catch (err) {
+        showToast("Invalid backup file");
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function escapeHtml(str) {
+    return String(str || "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  // Initialize App
+  window.addEventListener("DOMContentLoaded", () => {
+    loadLocalState();
+    document.getElementById("expDate").value = todayStr();
+    document.getElementById("depDate").value = todayStr();
+    selectedSplitIds = new Set(state.members.map(m => m.id));
+    updateCatBadgeUI();
+    renderAll();
+    if (getScriptUrl()) {
+      syncFromCloud(false);
+    } else {
+      updateSyncStatusUI("local", "Connect Sheet");
+    }
+  });
+</script>
 </body>
 </html>
